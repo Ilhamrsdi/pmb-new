@@ -48,7 +48,7 @@ class Pendaftar extends Model
 
     public function programStudi2()
     {
-        return $this->belongsTo(RefPorgramStudi::class, 'program_studi_2_id');
+        return $this->belongsTo(ProgramStudi::class, 'program_studi_2_id');
     }
 
     public function gelombangPendaftaran()

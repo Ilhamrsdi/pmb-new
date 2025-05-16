@@ -295,9 +295,9 @@ class KelengkapanDataController extends Controller
         $kendaraan = ['sepeda motor', 'mobil', 'sepeda gayung'];
     
         // Mengambil data pendidikan, profesi, dan pendapatan dengan eager loading untuk efisiensi
-        $pendidikan = RefPendidikan::all();
-        $profesi = RefProfesi::all();
-        $pendapatan = RefPendapatan::all();
+        $pendidikan = ['SD', 'SMP','SMA', 'S1', 'S2', 'S3'];
+        $profesi = ['Wiraswasta', 'PNS', 'PETANI', 'DAGANG'];
+        $pendapatan = ['Dibawah 3.000.000', 'Diatas 3.000.000'];
     
         // Form Berkas Pendukung
         $list_berkas = BerkasGelombangTransaksi::where('gelombang_id', $pendaftar->gelombang_id)

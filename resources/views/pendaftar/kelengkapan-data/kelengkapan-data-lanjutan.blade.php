@@ -135,18 +135,16 @@
                                         <!--end col-->
                                         <div class="col-md-4 mb-3">
                                             <label for="pendidikan_ayah" class="form-label">Pendidikan Ayah Kandung</label>
-                                            <select id="pendidikan_ayah" class="form-select" data-choices data-choices-sorting="true"
-                                                name="pendidikan_ayah">
+                                            <select id="pendidikan_ayah" class="form-select" data-choices data-choices-sorting="true" name="pendidikan_ayah">
                                                 <option selected>Pilih Pendidikan Terakhir...</option>
                                                 @foreach ($pendidikan as $item)
-                                                <option {{ $item->name == $pendaftar->wali->pendidikan_ayah ? 'selected' : '' }}>
-                                                    {{ $item->name }}
-                                                </option>
+                                                    <option value="{{ $item }}" 
+                                                        {{ $item == $pendaftar->wali->pendidikan_ayah ? 'selected' : '' }}>
+                                                        {{ $item }}
+                                                    </option>
                                                 @endforeach
                                             </select>
-                                            {{-- <input id="pendidikan_ayah" class="form-control" name="pendidikan_ayah"
-                                                value="SMA"> --}}
-                                        </div>
+                                        </div>                                        
                                         <!--end col-->
                                         <div class="col-md-4 mb-3">
                                             <label for="pekerjaan_ayah" class="form-label">Pekerjaan Ayah Kandung</label>
@@ -154,8 +152,8 @@
                                             name="pekerjaan_ayah">
                                             <option selected>Pilih Pekerjaan...</option>
                                             @foreach ($profesi as $item)
-                                            <option {{ $item->name == $pendaftar->wali->pekerjaan_ayah ? 'selected' : '' }}>
-                                                {{ $item->name }}
+                                            <option {{ $item == $pendaftar->wali->pekerjaan_ayah ? 'selected' : '' }}>
+                                                {{ $item}}
                                             </option>
                                             @endforeach
                                         </select>
@@ -169,8 +167,8 @@
                                             name="penghasilan_ayah">
                                             <option selected>Pilih Pendapatan...</option>
                                             @foreach ($pendapatan as $item)
-                                            <option {{ $item->name == $pendaftar->wali->penghasilan_ayah ? 'selected' : '' }}>
-                                                {{ $item->name }}</option>
+                                            <option {{ $item == $pendaftar->wali->penghasilan_ayah ? 'selected' : '' }}>
+                                                {{ $item }}</option>
                                             @endforeach
                                         </select>
                                             {{-- <input id="pekerjaan_ayah" class="form-control" name="penghasilan_ayah"
@@ -221,8 +219,8 @@
                                             name="pendidikan_ibu">
                                             <option selected>Pilih Pendidikan Terakhir...</option>
                                             @foreach ($pendidikan as $item)
-                                            <option {{ $item->name == $pendaftar->wali->pendidikan_ibu ? 'selected' : '' }}>
-                                                {{ $item->name }}</option>
+                                            <option {{ $item == $pendaftar->wali->pendidikan_ibu ? 'selected' : '' }}>
+                                                {{ $item }}</option>
                                             @endforeach
                                         </select>
                                             {{-- <input id="pendidikan_ibu" class="form-control" name="pendidikan_ibu"
@@ -235,8 +233,8 @@
                                             name="pekerjaan_ibu">
                                             <option selected>Pilih Pekerjaan...</option>
                                             @foreach ($profesi as $item)
-                                            <option {{ $item->name == $pendaftar->wali->pekerjaan_ibu ? 'selected' : '' }}>
-                                                {{ $item->name }}
+                                            <option {{ $item == $pendaftar->wali->pekerjaan_ibu ? 'selected' : '' }}>
+                                                {{ $item}}
                                             </option>
                                             @endforeach
                                         </select>
@@ -250,8 +248,8 @@
                                                     name="penghasilan_ibu">
                                                     <option selected>Pilih Pendapatan...</option>
                                                     @foreach ($pendapatan as $item)
-                                                    <option {{ $item->name == $pendaftar->wali->penghasilan_ibu ? 'selected' : '' }}>
-                                                        {{ $item->name }}</option>
+                                                    <option {{ $item == $pendaftar->wali->penghasilan_ibu ? 'selected' : '' }}>
+                                                        {{ $item }}</option>
                                                     @endforeach
                                                 </select>
                                             {{-- <input id="penghasilan_ibu" class="form-control" name="penghasilan_ibu"
@@ -393,23 +391,31 @@
 
                                     <div class="row">
                                         @foreach ($list_berkas as $berkas)
-                                          <div class="col-lg-12 mb-3">
-                                            <label for="{{ 'file-' . $berkas->berkas->nama_berkas }}"
-                                              class="d-flex justify-content-between align-items-center">Upload Berkas
-                                              {{ Str::upper($berkas->berkas->nama_berkas) }}
-                                              {{-- <a class="btn btn-sm btn-primary" href="{{ asset('assets/file/' . $pendaftar->'file-'.$berkas ) }}"
-                                                download>Download Berkas</a> --}}
-                                            </label>
-                                            <label for="{{ 'file-' . $berkas->berkas->nama_berkas }}" class="drop-container">
-                                              <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
-                                              <h4 class="drop-title">Drop files here or click to upload.</h4>
-                                              <input type="file" name="{{ 'file[' . $berkas->berkas->nama_berkas . ']' }}"
-                                                id="{{ 'file-' . $berkas->berkas->nama_berkas }}"
-                                                accept="application/pdf,image/jpg,image/jpeg,image/png" required>
-                                            </label>
-                                          </div>
+                                            @php
+                                                $namaBerkas = $berkas->berkas->nama_berkas;
+                                                $displayName = Str::headline(str_replace('_', ' ', $namaBerkas));
+                                            @endphp
+                                    
+                                            @if (in_array($namaBerkas, ['slip_gaji', 'ijazah']))
+                                                <div class="col-lg-12 mb-3">
+                                                    <label for="{{ 'file-' . $namaBerkas }}" class="d-flex justify-content-between align-items-center">
+                                                        Upload Berkas {{ $displayName }}
+                                                    </label>
+                                    
+                                                    <label for="{{ 'file-' . $namaBerkas }}" class="drop-container">
+                                                        <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
+                                                        <h4 class="drop-title">Drop files here or click to upload.</h4>
+                                                        <input type="file" 
+                                                            name="{{ 'file[' . $namaBerkas . ']' }}" 
+                                                            id="{{ 'file-' . $namaBerkas }}" 
+                                                            accept="application/pdf,image/jpg,image/jpeg,image/png" 
+                                                            required>
+                                                    </label>
+                                                </div>
+                                            @endif
                                         @endforeach
-                                      </div>
+                                    </div>
+                                    
 
                                     <div class="d-flex align-items-start gap-3 mt-4">
                                         <button type="button" class="btn btn-light btn-label previestab" data-previous="pills-bio-diri-tab"><i

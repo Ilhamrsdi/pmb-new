@@ -377,7 +377,7 @@ Apakah  Anda yakin ingin mengubah status pendaftaran?
                 </tr>
                 <tr>
                   <td style="width: 400px">NISN PENDAFTAR</td>
-                  <td>{{ $row->nisn }}</td>
+                  <td>{{ $row->nisn ?? 'Belum di perbarui data' }}</td>
                 </tr>
                 <tr>
                   <td style="width: 400px">EMAIL</td>
@@ -428,7 +428,7 @@ Apakah  Anda yakin ingin mengubah status pendaftaran?
                 </tr>
                 <tr>
                   <td style="width: 400px">NOMINAL PEMBAYARAN PENDAFTARAN</td>
-                  <td>{{ $row->gelombangPendaftaran->biaya_pendaftaran }}</td>
+                  <td>Rp {{ number_format($row->gelombangPendaftaran->biaya_pendaftaran, 0, ',', '.') }}</td>
                 </tr>
                 <tr>
                   <td style="width: 400px">STATUS PENDAFTARAN</td>
@@ -445,7 +445,9 @@ Apakah  Anda yakin ingin mengubah status pendaftaran?
                 </tr>
                 <tr>
                   <td style="width: 400px">NOMINAL PEMBAYARAN UKT</td>
-                  <td>{{ $row->detailPendaftar?->nominal_ukt ?? 'Belum di set Ukt' }}</td>
+                  <td>
+                    {{ is_numeric($row->detailPendaftar?->nominal_ukt) ? 'Rp ' . number_format($row->detailPendaftar->nominal_ukt, 0, ',', '.') : 'Belum di set UKT' }}
+                </td>                
                 </tr>
                 <tr>
                   <td style="width: 400px">STATUS UKT</td>

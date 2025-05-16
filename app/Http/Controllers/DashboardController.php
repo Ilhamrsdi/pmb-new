@@ -329,7 +329,7 @@ class DashboardController extends Controller
                         $dataPendaftar = $data->detailPendaftar->pendaftar_id;
                         $nomer_va      = $data->detailPendaftar->va_pendaftaran;
                         $expired_va    = $data->detailPendaftar->datetime_expired;
-                        return view('pendaftar.dashboard.dashboard-pendaftaran', compact('nomer_va', 'expired_va', 'tata_cara', 'dataPendaftar'));
+                        return view('pendaftar.dashboard.dashboard-pendaftaran', compact('nomer_va', 'expired_va', 'tata_cara', 'dataPendaftar', ));
                     } elseif ($data->detailPendaftar->status_pendaftaran === 'sudah') {
                         // Jika status pendaftaran sudah 'sudah'
                         if ($data->detailPendaftar->status_kelengkapan_data === 'sudah' && $data->detailPendaftar->status_ujian === 'sudah') {

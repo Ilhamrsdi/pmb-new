@@ -1053,38 +1053,39 @@
     });
     </script>
     <script>
-    // document.getElementById('gelombang').addEventListener('change', function() {
-    //     const gelombangId = this.value;
+    
+    document.getElementById('gelombang').addEventListener('change', function() {
+        const gelombangId = this.value;
 
-    //     fetch(`/get-program-studi-2?gelombang_id=${gelombangId}`)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             const programStudi2Dropdown = document.getElementById('programStudi2');
-    //             const prodiLainDropdown = document.getElementById('prodiLain');
+        fetch(`/get-program-studi-2?gelombang_id=${gelombangId}`)
+            .then(response => response.json())
+            .then(data => {
+                const programStudi2Dropdown = document.getElementById('programStudi2');
+                const prodiLainDropdown = document.getElementById('prodiLain');
 
-    //             // Reset dropdown options
-    //             programStudi2Dropdown.innerHTML = '<option value="">Pilih Program Studi</option>';
-    //             prodiLainDropdown.innerHTML = '<option value="">Pilih Program Studi Lain</option>';
+                // Reset dropdown options
+                programStudi2Dropdown.innerHTML = '<option value="">Pilih Program Studi</option>';
+                prodiLainDropdown.innerHTML = '<option value="">Pilih Program Studi Lain</option>';
 
-    //             if (data.error) {
-    //                 // alert(data.error);
-    //                 return;
-    //             }
+                if (data.error) {
+                    // alert(data.error);
+                    return;
+                }
 
-    //             // Populate Program Studi 2
-    //             data.program_studi_2.forEach(programStudi2 => {
-    //                 programStudi2Dropdown.innerHTML +=
-    //                     `<option value="${programStudi2.id}">${programStudi2.nama_program_studi}</option>`;
-    //             });
+                // Populate Program Studi 2
+                data.program_studi_2.forEach(programStudi2 => {
+                    programStudi2Dropdown.innerHTML +=
+                        `<option value="${programStudi2.id}">${programStudi2.nama_program_studi}</option>`;
+                });
 
-    //             // Populate Prodi Lain
-    //             data.prodi_lain.forEach(prodiLain => {
-    //                 prodiLainDropdown.innerHTML +=
-    //                     `<option value="${prodiLain.id}">${prodiLain.name} - ${prodiLain.kampus}</option>`;
-    //             });
-    //         })
-    //         .catch(error => console.error('Error:', error));
-    // });
+                // Populate Prodi Lain
+                data.prodi_lain.forEach(prodiLain => {
+                    prodiLainDropdown.innerHTML +=
+                        `<option value="${prodiLain.id}">${prodiLain.name} - ${prodiLain.kampus}</option>`;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    });
     </script>
 
 

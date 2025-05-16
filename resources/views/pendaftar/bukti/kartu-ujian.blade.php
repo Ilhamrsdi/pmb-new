@@ -79,11 +79,11 @@
                 <tbody>
                     <tr>
                         <th>Pilihan Jurusan Ke-1</th>
-                        <td>{{$pendaftar->programStudi->name}}</td>
+                        <td>{{$pendaftar->programStudi->nama_program_studi}}</td>
                     </tr>
                     <tr>
                         <th>Pilihan Jurusan Ke-2</th>
-                        <td>{{$pendaftar->programStudi2->name ?? 'Tidak Ada Pilihan'}}</td>
+                        <td>{{$pendaftar->programStudi2->nama_program_studi ?? 'Tidak Ada Pilihan'}}</td>
                     </tr>
                     <tr>
                         <th>Pilihan Jurusan Ke-3</th>
