@@ -254,7 +254,7 @@ class KelengkapanDataController extends Controller
             }
         }
 
-        return redirect()->route('kelengkapan-data.edit', ['id' => $id])->with('tab', 'finish');
+        return redirect()->route('kelengkapan-data.lanjutan.update', ['id' => $id])->with('tab', 'finish');
     }
 
     public function index($id)
