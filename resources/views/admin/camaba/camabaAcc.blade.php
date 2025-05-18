@@ -401,7 +401,7 @@
                               @elseif ($penghasilan_ayah < 3000000)
                                   <td>Kurang Dari Rp. 3000.000</td>
                               @else
-                                  <td>Lebih Dari Rp. 3000.0000</td> <!-- Tambahkan else untuk menangani nilai lebih dari Rp. 3000.000 -->
+                                  <td>Lebih Dari Rp. 3000.000</td> <!-- Tambahkan else untuk menangani nilai lebih dari Rp. 3000.000 -->
                               @endif
                           </tr>                                           
                           </tbody>
