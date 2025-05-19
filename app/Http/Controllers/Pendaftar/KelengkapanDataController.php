@@ -308,6 +308,8 @@ class KelengkapanDataController extends Controller
         
         $atributGambars = AtributGambar::all();
         // dd($pendaftar)->all;
+        // dd(request()->all());
+
         return view('pendaftar.kelengkapan-data.kelengkapan-data-lanjutan', compact(
             'pendaftar', 'kendaraan', 'jenis_tinggal', 'negara', 'provinsi',
             'kabupatenKotaData', 'kecamatan', 'agama', 'ukuran',
@@ -318,11 +320,11 @@ class KelengkapanDataController extends Controller
     public function updateLanjutan(Request $request, $id)
     {
         // Validasi input
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'nisn' => 'required|numeric|digits:10',
-            // Tambahkan validasi lainnya
-        ]);
+        // $request->validate([
+        //     'nama' => 'required|string|max:255',
+        //     'nisn' => 'required|numeric|digits:10',
+        //     // Tambahkan validasi lainnya
+        // ]);
 
         // Update data Pendaftar
         $pendaftar = Pendaftar::findOrFail($id);
@@ -332,12 +334,25 @@ class KelengkapanDataController extends Controller
             "sekolah" => $request->sekolah,
             // ...lanjutan atribut lainnya
         ]);
+        
 
         // Update data Wali
         $wali = Wali::where('pendaftar_id', $id)->firstOrFail();
         $wali->update([
-            "nik_ayah"    => $request->nik_ayah,
-            "status_ayah" => $request->status_ayah,
+            "nik_ayah"           => $request->nik_ayah,
+            "status_ayah"        => $request->status_ayah,
+            "nama_ayah"          => $request->nama_ayah,
+            "tanggal_lahir_ayah" => $request->tanggal_lahir_ayah,
+            "pendidikan_ayah"    => $request->pendidikan_ayah,
+            "pekerjaan_ayah"     => $request->pekerjaan_ayah,
+            "penghasilan_ayah"   => $request->penghasilan_ayah,
+            "nik_ibu"            => $request->nik_ibu,
+            "status_ibu"         => $request->status_ibu,
+            "nama_ibu"           => $request->nama_ibu,
+            "tanggal_lahir_ibu"  => $request->tanggal_lahir_ibu,
+            "pendidikan_ibu"     => $request->pendidikan_ibu,
+            "pekerjaan_ibu"      => $request->pekerjaan_ibu,
+            "penghasilan_ibu"    => $request->penghasilan_ibu,
             // ...lanjutan atribut lainnya
         ]);
 
@@ -364,6 +379,7 @@ class KelengkapanDataController extends Controller
             }
         }
 
+        // dd()->request()->all();
         // Redirect dengan pesan sukses
        return redirect()->back()->with('tab', 'finish');
 

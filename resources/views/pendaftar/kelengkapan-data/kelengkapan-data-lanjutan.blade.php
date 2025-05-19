@@ -43,10 +43,10 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body kelengkapan-data-tab">
-                    <form id="myform" action="{{ route('kelengkapan-data.lanjutan.index', $pendaftar->id) }}" method="post"
-                        enctype="multipart/form-data">
+                                    <form id="myform" action="{{ route('kelengkapan-data.lanjutan.update', $pendaftar->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
+
                         <div class="step-arrow-nav mt-n3 mx-n3 mb-3">
                             <ul class="nav nav-pills nav-justified custom-nav" role="tablist">
                                 <li class="nav-item" role="presentation">
