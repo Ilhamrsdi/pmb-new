@@ -254,7 +254,9 @@ class KelengkapanDataController extends Controller
             }
         }
 
-        return redirect()->route('kelengkapan-data.lanjutan.index', ['id' => $id])->with('tab', 'finish');
+        // return redirect()->route('kelengkapan-data.lanjutan.index', ['id' => $id])->with('tab', 'finish');
+        return redirect()->route('kelengkapan-data.edit', ['id' => $id])->with('tab', 'finish');
+
     }
 
     public function index($id)
@@ -305,7 +307,7 @@ class KelengkapanDataController extends Controller
             ->get();
         
         $atributGambars = AtributGambar::all();
-    
+        // dd($pendaftar)->all;
         return view('pendaftar.kelengkapan-data.kelengkapan-data-lanjutan', compact(
             'pendaftar', 'kendaraan', 'jenis_tinggal', 'negara', 'provinsi',
             'kabupatenKotaData', 'kecamatan', 'agama', 'ukuran',
@@ -363,7 +365,8 @@ class KelengkapanDataController extends Controller
         }
 
         // Redirect dengan pesan sukses
-        return redirect()->route('dashboard', $id)->with('success', 'Data berhasil diperbarui!');
+       return redirect()->back()->with('tab', 'finish');
+
     }
 
     //   use Illuminate\Support\Facades\Http; // Pastikan ini di-import

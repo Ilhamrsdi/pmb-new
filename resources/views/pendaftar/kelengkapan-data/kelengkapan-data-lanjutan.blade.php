@@ -43,7 +43,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body kelengkapan-data-tab">
-                    <form id="myform" action="{{ route('kelengkapan-data.update', $pendaftar->id) }}" method="post"
+                    <form id="myform" action="{{ route('kelengkapan-data.lanjutan.index', $pendaftar->id) }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -759,5 +759,15 @@
             console.log(form);
         })
     </script>
+ <script>
+document.addEventListener('DOMContentLoaded', function () {
+    @if(session('tab') === 'finish')
+    var triggerEl = document.querySelector('#pills-finish-tab')
+    var tab = new bootstrap.Tab(triggerEl)
+    tab.show()
+    @endif
+});
+</script>
+
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
 @endsection
