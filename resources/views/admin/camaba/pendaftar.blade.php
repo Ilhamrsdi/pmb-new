@@ -169,6 +169,7 @@
                                                     </th> --}}
                           <td class="id" style="display:none;"><a href="javascript:void(0);"
                               class="fw-medium link-primary">#VZ2101</a></td>
+                              
                           <td class="customer_name">{{ $row->nama }}</td>
                           {{-- <!--<td class="date">{{ $row->detailPendaftar->tanggal_daftar }}</td>--> --}}
                           <td class="date">

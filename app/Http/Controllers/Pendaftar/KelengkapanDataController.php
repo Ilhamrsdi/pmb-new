@@ -328,12 +328,12 @@ class KelengkapanDataController extends Controller
 
         // Update data Pendaftar
         $pendaftar = Pendaftar::findOrFail($id);
-        $pendaftar->update([
-            "nama"    => $request->nama,
-            "nisn"    => $request->nisn,
-            "sekolah" => $request->sekolah,
-            // ...lanjutan atribut lainnya
-        ]);
+        // $pendaftar->update([
+        //     "nama"    => $request->nama,
+        //     "nisn"    => $request->nisn,
+        //     "sekolah" => $request->sekolah,
+        //     // ...lanjutan atribut lainnya
+        // ]);
         
 
         // Update data Wali
