@@ -67,7 +67,7 @@
               </span>
               
               <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">
-                {{ Auth::user()->role_id == 1,2 ? '' : optional(Auth::user()->role)->role }}
+                {{ Auth::user()->role_id == 1,3 ? '' : optional(Auth::user()->role)->role }}
               </span>
               
             </span>
