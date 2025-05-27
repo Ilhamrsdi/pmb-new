@@ -131,12 +131,12 @@ class RegisterController extends Controller
             'email'         => $user->email,
             'password'      => 'password',
             'gelombang'     => $gelombang->nama_gelombang . " - " . $gelombang->deskripsi,
-            'program_studi' => $program_studi->name,
-            'prodi_lain'    => $prodi_lain->name,
+            'program_studi' => $program_studi->nama_program_studi,
+            'prodi_lain'    => $prodi_lain->name . $prodi_lain->kampus,
 
         ];
 
-        // Mail::to($user->email)->send(new EmailNotification($mailData));
+        Mail::to($user->email)->send(new EmailNotification($mailData));
 
         return $user;
     }
