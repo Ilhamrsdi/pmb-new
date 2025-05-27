@@ -132,7 +132,7 @@ class RegisterController extends Controller
             'password'      => 'password',
             'gelombang'     => $gelombang->nama_gelombang . " - " . $gelombang->deskripsi,
             'program_studi' => $program_studi->nama_program_studi,
-            'prodi_lain'    => $prodi_lain->name . $prodi_lain->kampus,
+            'prodi_lain'    => $prodi_lain->name ."-" . $prodi_lain->kampus,
 
         ];
 
