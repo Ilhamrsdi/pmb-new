@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Pendaftar;
 use App\Http\Controllers\Controller;
 use App\Models\DetailPendaftar;
 use App\Models\GelombangPendaftaran;
+use App\Models\Jurusan;
 use App\Models\Pendaftar;
 use App\Models\ProgramStudi;
 use App\Models\Wali;
@@ -22,7 +23,7 @@ class CamabaAccController extends Controller
         // $camaba_acc = Pendaftar::with('refNegara', 'detailPendaftar')->get();
         $gelombangPendaftaran = GelombangPendaftaran::all();
         $programStudi         = ProgramStudi::get();
-
+        $jurusan =Jurusan::get();
         $query = Pendaftar::query();
 
         // Tentukan kolom yang akan diambil, dan gunakan DISTINCT

@@ -434,9 +434,10 @@ Apakah  Anda yakin ingin mengubah status pendaftaran?
                 <tr>
                   <td style="width: 400px">STATUS PENDAFTARAN</td>
                   <td>
-                    <span class="badge badge-soft-{{ $row->detailPendaftar->status_pendaftaran === 'sudah' ? 'success' : 'danger' }} text-uppercase">
-                        {{ $row->detailPendaftar->status_pendaftaran ?? 'Belum' }}
-                    </span>
+                    <span class="badge badge-soft-{{ optional($row->detailPendaftar)->status_pendaftaran === 'sudah' ? 'success' : 'danger' }} text-uppercase">
+      {{ optional($row->detailPendaftar)->status_pendaftaran ?? 'belum' }}
+  </span>
+
                 </td>
                 
                 </tr>
@@ -454,7 +455,7 @@ Apakah  Anda yakin ingin mengubah status pendaftaran?
                   <td style="width: 400px">STATUS UKT</td>
                     {{-- <td><span class="badge badge-soft-danger text-uppercase">{{ $row->detailPendaftar?->status_ukt ?? 'Belum'}}</span></td> --}}
                     <td>
-                      <span class="badge badge-soft-{{ $row->detailPendaftar->status_ukt === 'sudah' ? 'success' : 'danger' }} text-uppercase">
+                      <span class="badge badge-soft-{{ optional($row->detailPendaftar)->status_ukt === 'sudah' ? 'success' : 'danger' }} text-uppercase">
                           {{ $row->detailPendaftar->status_ukt ?? 'Belum' }}
                       </span>
                   </td>

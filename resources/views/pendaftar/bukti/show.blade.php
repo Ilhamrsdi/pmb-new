@@ -64,6 +64,13 @@
                             <td></td>
                           </tr>
                           <tr>
+                            <td class="fw-medium column">NIM</td>
+                            <td class="fw-medium column">:</td>
+                            <td>{{ $pendaftar->nim }}</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
                             <td class="fw-medium column">Asal Sekolah</td>
                             <td class="fw-medium column">:</td>
                             <td>{{ $pendaftar->sekolah }}</td>

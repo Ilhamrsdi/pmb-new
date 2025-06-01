@@ -685,26 +685,35 @@ Form Kelengkapan Data
 
                             <div>
 
-                                <div class="row">
-                                    @foreach ($list_berkas as $berkas)
-                                    <div class="col-lg-12 mb-3">
-                                        <label for="{{ 'file-' . $berkas->berkas->nama_berkas }}"
-                                            class="d-flex justify-content-between align-items-center">Upload Berkas
-                                            {{ Str::upper($berkas->berkas->nama_berkas) }}
-                                            {{-- <a class="btn btn-sm btn-primary" href="{{ asset('assets/file/' . $pendaftar->'file-'.$berkas ) }}"
-                                            download>Download Berkas</a> --}}
-                                        </label>
-                                        <label for="{{ 'file-' . $berkas->berkas->nama_berkas  }}"
-                                            class="drop-container">
-                                            <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
-                                            <h4 class="drop-title">Drop files here or click to upload.</h4>
-                                            <input type="file" name="{{ 'file[' . $berkas->berkas->nama_berkas . ']' }}"
-                                                id="{{ 'file-' . $berkas->berkas->nama_berkas }}"
-                                                accept="application/pdf,image/jpg,image/jpeg,image/png" required>
-                                        </label>
-                                    </div>
-                                    @endforeach
-                                </div>
+                               @php
+    $berkasDiizinkan = ['KK', 'KTP', 'FOTO', 'TRANSKIP NILAI'];
+@endphp
+
+<div class="row">
+    @foreach ($list_berkas as $berkas)
+        @php
+            $namaBerkas = strtoupper($berkas->berkas->nama_berkas);
+        @endphp
+
+        @if(in_array($namaBerkas, $berkasDiizinkan))
+            <div class="col-lg-12 mb-3">
+                <label for="{{ 'file-' . $namaBerkas }}"
+                    class="d-flex justify-content-between align-items-center">
+                    Upload Berkas {{ $namaBerkas }}
+                </label>
+
+                <label for="{{ 'file-' . $namaBerkas }}" class="drop-container">
+                    <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
+                    <h4 class="drop-title">Drop files here or click to upload.</h4>
+                    <input type="file" name="{{ 'file[' . $namaBerkas . ']' }}"
+                        id="{{ 'file-' . $namaBerkas }}"
+                        accept="application/pdf,image/jpg,image/jpeg,image/png" required>
+                </label>
+            </div>
+        @endif
+    @endforeach
+</div>
+
 
                                 <div class="d-flex align-items-start gap-3 mt-4">
                                     <button type="button" class="btn btn-light btn-label previestab"

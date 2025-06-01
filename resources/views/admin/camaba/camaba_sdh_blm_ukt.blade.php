@@ -253,7 +253,7 @@
                               <td>{{ $row->nama }}</td>
                             </tr>
                             <tr>
-                              <td style="width: 400px">PILIHAN UKT</td>
+                              <td style="width: 400px">POTONGAN UKT</td>
                               <td>{{ $row->potongan_ukt ?? 'Tidak Ada' }}</td>
                             </tr>
                             <tr>
@@ -263,9 +263,9 @@
                             <tr>
                               <td style="width: 400px">JURUSAN / PRODI</td>
                               <td>  
-                                {{ $row->programStudi?->jurusan?->name ?? 'Tidak Ada' }} - 
-                                {{ $row->programStudi?->name ?? 'Tidak Ada' }} -
-                                {{ $row->programStudi?->pendidikan?->name ?? 'Tidak Ada' }}
+                                {{ $row->programStudi?->nama_program_studi?? 'Tidak Ada' }} - 
+                                {{ $row->programStudi?->jurusan->nama_jurusan ?? 'Tidak Ada' }} -
+                                {{ $row->programStudi?->jenjang_pendidikan ?? 'Tidak Ada' }}
                               </td>
                             </tr>
                             <tr>

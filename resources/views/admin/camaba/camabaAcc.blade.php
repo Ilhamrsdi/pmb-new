@@ -279,9 +279,12 @@
                             <tr>
                               <td style="width: 400px">PRODI - JURUSAN</td>
                               <td>
-                                {{ $row->programStudi?->jurusan?->name ?? 'Tidak Ada' }} - 
-                                {{ $row->programStudi?->name ?? 'Tidak Ada' }} -
-                                {{ $row->programStudi?->pendidikan?->name ?? 'Tidak Ada' }}
+                                {{-- {{ $row->programStudi?->jurusan?->nama_program_studi ?? 'Tidak Ada' }} - 
+                                {{ $row->programStudi?->nama_jurusan ?? 'Tidak Ada' }} -
+                                {{ $row->programStudi?->pendidikan?->jenjang_pendidikan ?? 'Tidak Ada' }} --}}
+                                 {{ $row->programStudi?->nama_program_studi ?? 'Tidak Ada' }} - 
+                                 {{$row->programStudi->jurusan->nama_jurusan ?? 'tidak ada'}} - 
+                                 {{$row->programStudi->jenjang_pendidikan}}
                               </td>
                             </tr>
                             
@@ -662,7 +665,7 @@
                                   $filePath = '';
                                   
                                   foreach ($extensions as $ext) {
-                                      $possiblePath = 'assets/file/transkrip/' . $row->id . '.' . $ext;
+                                      $possiblePath = 'assets/file/TRANSKIP NILAI/' . $row->id . '.' . $ext;
                                       if (file_exists(public_path($possiblePath))) {
                                           $filePath = asset($possiblePath);
                                           break;
@@ -702,7 +705,7 @@
                                   $filePath = '';
                                   
                                   foreach ($extensions as $ext) {
-                                      $possiblePath = 'assets/file/raport/' . $row->id . '.' . $ext;
+                                      $possiblePath = 'assets/file/FILE RAPOR/' . $row->id . '.' . $ext;
                                       if (file_exists(public_path($possiblePath))) {
                                           $filePath = asset($possiblePath);
                                           break;
@@ -743,6 +746,46 @@
                                   
                                   foreach ($extensions as $ext) {
                                       $possiblePath = 'assets/file/foto/' . $row->id . '.' . $ext;
+                                      if (file_exists(public_path($possiblePath))) {
+                                          $filePath = asset($possiblePath);
+                                          break;
+                                      }
+                                  }
+                              @endphp
+                      
+                              @if($filePath)
+                                  <img src="{{ $filePath }}" alt="Foto" width="950px" height="400px">
+                              @else
+                                  <p>Berkas tidak tersedia</p>
+                              @endif
+                                </div>
+                              </td>
+                            </tr>
+                             <tr>
+                              <td style="width: 400px">FILE SLIP GAJI ORANG TUA</td>
+                              {{-- <td><a href="{{ url('file_pendamping/transkip/', $row->file_transkip) }}"
+                                                                    class="btn btn-link">DOWNLOAD</a></td> --}}
+                              <td><a class="btn btn-link" id="showSlip{{ $row->id }}"
+                                  onclick="showSlipfunction('{{ $row->id }}')">TAMPILKAN</a>
+                              </td>
+                            </tr>
+                             <tr>
+                              <td>
+                                <div id="formSlip{{ $row->id }}" hidden>
+                                  <div class="card-header">
+                                    <button type="button" id="hideSlip{{ $row->id }}"
+                                      onclick="hideSlipfunction('{{ $row->id }}')"
+                                      class="btn-close float-end fs-11" aria-label="Close"></button>
+                                  </div>
+                                  {{-- <iframe src="{{ url('file_pendamping/foto/', $row->file_foto) }}" width="950px"
+                                    height="400px">
+                                  </iframe> --}}
+                                  @php
+                                  $extensions = ['pdf', 'jpg', 'png', 'jpeg', 'webp'];
+                                  $filePath = '';
+                                  
+                                  foreach ($extensions as $ext) {
+                                      $possiblePath = 'assets/file/SLIP GAJI ORANG TUA/' . $row->id . '.' . $ext;
                                       if (file_exists(public_path($possiblePath))) {
                                           $filePath = asset($possiblePath);
                                           break;
@@ -907,6 +950,14 @@
 
     function hideFotofunction(id) {
       $("#formFoto" + id).prop("hidden", true);
+    }
+
+    function showSlipfunction(id){
+      $("#formSlip" + id).prop("hidden", false);
+    }
+
+    function hideSlipfunction(id) {
+      $("#formSlip" + id).prop("hidden", true);
     }
   </script>
   <!--=========================== Filter & Seearch on Select ===============================-->

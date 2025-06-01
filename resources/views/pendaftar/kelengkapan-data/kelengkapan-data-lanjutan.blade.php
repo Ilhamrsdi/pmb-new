@@ -396,7 +396,7 @@
                                                 $displayName = Str::headline(str_replace('_', ' ', $namaBerkas));
                                             @endphp
                                     
-                                            @if (in_array($namaBerkas, ['slip_gaji', 'ijazah']))
+                                            @if (in_array($namaBerkas, ['SLIP GAJI ORANG TUA', 'FILE RAPOR', 'IJAZAH']))
                                                 <div class="col-lg-12 mb-3">
                                                     <label for="{{ 'file-' . $namaBerkas }}" class="d-flex justify-content-between align-items-center">
                                                         Upload Berkas {{ $displayName }}

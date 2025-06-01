@@ -419,7 +419,7 @@
                                                     @foreach ($listPendaftar as $i => $pendaftar)
                                                         <tr>
                                                             <td>{{ ++$i }}</td>
-                                                            <td class="customer_name">{{ $pendaftar->user->nik }}
+                                                            <td class="customer_name">{{ $pendaftar->user->nik ?? '' }}
                                                             </td>
                                                             <td class="email">{{ $pendaftar->nama ?? 'Ilham' }}</td>
 
@@ -584,6 +584,9 @@
                                                             </th>
                                                             <th class="sort" data-sort="email">NAMA
                                                             </th>
+                                                            <th class="sort" data-sort="penghasilan-ayah">PENGHASILAN AYAH</th>
+                                                            <th class="sort" data-sort="penghasilan-ibu">PENGHASILAN IBU</th>
+                                                            <th>AKSI</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="list form-check-all">
@@ -598,14 +601,50 @@
                                                                     </div>
                                                                 </th>
                                                                 <td class="customer_name">
-                                                                    {{ $data->User->nik }}</td>
+                                                                    {{ $data->User->nik ?? ''}}</td>
                                                                 <td class="email">
                                                                     {{ $data->nama }}</td>
+                                                                <td class="penghasilan-ayah">
+                                                                    {{$data->wali->penghasilan_ayah ?? 'masih belum diupdate'}}
+                                                                </td>
+                                                                <td class="penghasilan-ibu">
+                                                                    {{$data->wali->penghasilan_ibu ?? 'masih belum diupdate'}}
+                                                                </td>
+                                                               <td> 
+                    @php
+                    $extensions = ['jpg', 'png', 'jpeg']; // Daftar ekstensi yang didukung
+                    $filePath = '';
+                
+                    if ($row->detailPendaftar) {
+                        foreach ($extensions as $ext) {
+                            $possiblePath =
+                                'assets/file/SLIP GAJI ORANG TUA/' .
+                                $row->detailPendaftar->pendaftar_id .
+                                '.' .
+                                $ext;
+                            if (file_exists(public_path($possiblePath))) {
+                                $filePath = asset($possiblePath);
+                                break;
+                            }
+                        }
+                    }
+                @endphp
+                
+
+                @if ($filePath)
+                   <a href="{{ $filePath }}" target="_blank" class="btn btn-info btn-sm" title="Lihat Bukti Pendaftaran">
+    <i class="ri-eye-line"></i>
+</a>
+
+                @else
+                    <p>File tidak ditemukan.</p>
+                @endif
+               
+</td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
-
                                                 <div class="noresult" style="display: none">
                                                     <div class="text-center">
                                                         <lord-icon src="https://cdn.lordicon.com/msoeawqm.json"
@@ -774,6 +813,8 @@
             </div>
         </div>
     @endforeach --}}
+
+
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/libs/prismjs/prismjs.js') }}"></script>

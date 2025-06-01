@@ -16,7 +16,8 @@ class UKTController extends Controller
      */
     public function index()
     {
-        // $ukt = Ukt::with('gelombangPendaftaran')->get();
+        
+        $ukt = Ukt::with('gelombangPendaftaran')->get();
         return view('admin.golongan_ukt.ukt');
         //
     }
