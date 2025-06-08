@@ -23,6 +23,11 @@ class BuktiController extends Controller
 {
     $request->validate([
         'bukti_bayar_pendaftaran' => 'required|file|mimes:jpg,png,jpeg|max:2048', // Maksimal 2MB
+        
+    ],
+    [
+        'bukti_bayar_pendaftaran.required' => 'File bukti bayar harus diunggah.',
+         'bukti_bayar_pendaftaran.mimes' => 'Format file tidak didukung. Harus JPG, JPEG, atau PNG.',
     ]);
 
     $id = $request->id;

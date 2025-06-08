@@ -586,7 +586,7 @@
                                                             </th>
                                                             <th class="sort" data-sort="penghasilan-ayah">PENGHASILAN AYAH</th>
                                                             <th class="sort" data-sort="penghasilan-ibu">PENGHASILAN IBU</th>
-                                                            <th>AKSI</th>
+                                                            <th>DOKUMEN PENDUKUNG</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="list form-check-all">
@@ -609,38 +609,38 @@
                                                                 </td>
                                                                 <td class="penghasilan-ibu">
                                                                     {{$data->wali->penghasilan_ibu ?? 'masih belum diupdate'}}
-                                                                </td>
-                                                               <td> 
-                    @php
-                    $extensions = ['jpg', 'png', 'jpeg']; // Daftar ekstensi yang didukung
-                    $filePath = '';
-                
-                    if ($row->detailPendaftar) {
-                        foreach ($extensions as $ext) {
-                            $possiblePath =
-                                'assets/file/SLIP GAJI ORANG TUA/' .
-                                $row->detailPendaftar->pendaftar_id .
-                                '.' .
-                                $ext;
-                            if (file_exists(public_path($possiblePath))) {
-                                $filePath = asset($possiblePath);
-                                break;
-                            }
-                        }
-                    }
-                @endphp
-                
+                                               <td>
+    @php
+        $extensions = ['jpg', 'png', 'jpeg'];
+        $filePath = '';
+        $pendaftarId = optional($data->detailPendaftar)->id;
+    @endphp
 
-                @if ($filePath)
-                   <a href="{{ $filePath }}" target="_blank" class="btn btn-info btn-sm" title="Lihat Bukti Pendaftaran">
-    <i class="ri-eye-line"></i>
-</a>
+    @if ($pendaftarId)
+        @php
+            foreach ($extensions as $ext) {
+                $possiblePath = 'assets/file/SLIP GAJI ORANG TUA/' . $pendaftarId . '.' . $ext;
+                if (file_exists(public_path($possiblePath))) {
+                    $filePath = asset($possiblePath);
+                    break;
+                }
+            }
+        @endphp
 
-                @else
-                    <p>File tidak ditemukan.</p>
-                @endif
-               
+        @if ($filePath)
+            <a href="{{ $filePath }}" target="_blank" class="btn btn-info btn-sm" title="Lihat Slip Gaji">
+                <i class="ri-eye-line"></i>
+            </a>
+        @else
+            <p>File tidak ditemukan.</p>
+        @endif
+    @else
+        <p>Detail pendaftar tidak ditemukan.</p>
+    @endif
 </td>
+
+
+
                                                             </tr>
                                                         @endforeach
                                                     </tbody>

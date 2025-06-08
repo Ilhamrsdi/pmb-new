@@ -40,6 +40,7 @@
         @endslot
     @endcomponent
 
+    
     <div class="row mb-4">
         <div class="col-xl-6">
             <div class="row">
@@ -84,6 +85,10 @@
 
                             <div class="row align-items-end">
                                 <div class="col-12">
+                                    @error('bukti_bayar_pendaftaran')
+    <div class="text-danger mt-1">{{ $message }}</div>
+@enderror
+
                                     <div class="text-end p-5">
                                         @php
                                             // Cek apakah file bukti pembayaran sudah ada
