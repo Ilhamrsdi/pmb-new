@@ -69,146 +69,162 @@
                     <input type="text" class="form-control search" placeholder="Search...">
                     <i class="ri-search-line search-icon"></i>
                   </div>
+<!-- Tombol untuk buka modal update status -->
+<div class="d-flex ms-2">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#statusModal">
+    Update Status
+  </button>
+</div>
+
+<!-- Modal pilihan jenis status -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="statusModalLabel">Pilih Status yang Ingin Diupdate</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body text-center">
+        <button id="updateUjian" class="btn btn-outline-primary me-2">Status Ujian</button>
+        <button id="updateAcc" class="btn btn-outline-success">Status ACC Pendaftaran</button>
+      </div>
+    </div>
+  </div>
+</div>
+
                 </div>
               </div>
             </div>
           </div><!-- end card header -->
-          <div class="card-body">
-            <div class="table-responsive table-card mt-3 mb-1">
-              <table class="table align-middle table-nowrap" id="customerTable">
-                <thead class="table-light">
-                  <tr>
-                    <th>
-                      <input type="checkbox" id="selectAll">
-                    </th>
-                    <th>No</th>
-                    <th class="sort" data-sort="customer_name">NIK</th>
-                    <th class="sort" data-sort="customer_name">NAMA PENDAFTAR</th>
-                    <th class="sort" data-sort="date">TGL DAFTAR</th>
-                    <th class="sort" data-sort="email">GELOMBANG</th>
-                    <th class="sort" data-sort="phone">PROGRAM STUDI</th>
-                    <th class="sort" data-sort="status">STATUS ACC</th>
-                    <th class="sort" data-sort=status-ujian>STATUS UJIAN</th>
-                    <th class="sort" data-sort="action">AKSI</th>
-                  </tr>
-                </thead>
-                <tbody class="list form-check-all" id="tbodyPendaftarID">
-                  @foreach ($camaba_acc as $i => $row)
-                      <tr>
-                        <td>
-                          <input type="checkbox" class="selectCheckbox" data-id="{{ $row->detailPendaftar->id }}">
-                      </td>
-                          <td>{{ ++$i }}</td>
-                          <td class="id" style="display:none;">
-                              <a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a>
-                          </td>
-                          
-                          <td class="customer_name">{{ $row->user->nik ?? 'Tidak Ada' }}</td>
-                          <td class="customer_name">{{ $row->nama ?? 'Tidak Ada' }}</td>
-                          <td class="date">{{ $row->detailPendaftar->tanggal_daftar ?? 'Tidak Ada' }}</td>
-                          <td class="email">{{ $row->gelombangPendaftaran?->nama_gelombang ?? 'Tidak Ada' }}</td>
-                          <td class="phone">{{ $row->programStudi?->nama_program_studi ?? 'Tidak Ada' }}</td>
-                          <td class="status">
-                              @if ($row->detailPendaftar?->status_acc === 'sudah')
-                                  <span class="badge badge-soft-success text-uppercase">{{ $row->detailPendaftar->status_acc }}</span>
-                              @else
-                                  <span class="badge badge-soft-danger text-uppercase">{{ $row->detailPendaftar?->status_acc ?? 'Belum' }}</span>
-                              @endif
-                          </td>
-                          <td class="status-ujian text-center">
-                            @if ($row->detailPendaftar?->status_ujian == 'sudah')
-                                  <span class="badge badge-soft-success text-uppercase">Lulus</span>
-                                                        @else
-                                                          <!-- Button trigger modal -->
-                                                          <!-- Button trigger modal -->
-                                  <a class="badge badge-soft-danger text-uppercase" 
-                                  data-bs-toggle="modal" 
-                                  data-bs-target="#exampleModal-{{ $row->detailPendaftar->id ?? '' }}">
-                                  {{ $row->detailPendaftar?->status_ujian ? ucfirst($row->detailPendaftar->status_ujian) : 'Belum Ujian' }}
-                              </a>
-                          
-                          <!-- Modal -->
-                          <div class="modal fade" id="exampleModal-{{$row->detailPendaftar->id ?? ''}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                          <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Update Status Ujian{{$row->detailPendaftar->id ?? ''}}</h5>
-                          <span aria-hidden="true">&times;</span>
-                          </button>
-                          </div>
-                          <form action="{{ route('status-ujian.update', ['id' => $row->detailPendaftar->id ?? '']) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="modal-body">
-                                Apakah Anda yakin ingin mengubah status Ujian?
-                                <input type="hidden" value="sudah" name="status_ujian">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-                                <button type="submit" class="btn btn-primary">Ya</button>
-                            </div>
-                        </form>
-                        
-                          
-                          </div>
-                          </div>
-                          </div>
-                          @endif
-                          </td>
-                        
-                          <td>
-                              <div class="d-flex gap-2">
-                                  <div class="edit">
-                                      <button type="button" id="detailPendaftar" class="btn btn-warning btn-icon waves-effect waves-light rounded-pill"
-                                              data-bs-toggle="modal" data-id="{{ $row->id }}" data-bs-target="#showModal{{ $row->id }}">
-                                          <i class="ri-information-line"></i>
-                                      </button>
-                                  </div>
-                                  <div class="remove">
-                                      <button type="button" class="btn btn-primary btn-icon waves-effect waves-light rounded-pill"
-                                              data-bs-toggle="modal" data-bs-target="#updateRecordModal{{ $row->id }}">
-                                          <i class="ri-check-double-fill"></i>
-                                      </button>
-                                  </div>
-                                  <div class="remove">
-                                      <button type="button" class="btn btn-danger btn-icon waves-effect waves-light rounded-pill"
-                                              data-bs-toggle="modal" data-bs-target="#deleteRecordModal{{ $row->id }}">
-                                          <i class="ri-delete-bin-fill"></i>
-                                      </button>
-                                  </div> 
-                                  <div class="d-flex gap-2">
-                                    <button type="button" id="updateSelected" class="btn btn-primary">Update Status</button>
-                                  </div>
-                                                     
-                              </div>
-                          </td>
-                      </tr>
-                  @endforeach
-              </tbody>
-              
-              </table>
-              <div class="noresult" style="display: none">
-                <div class="text-center">
-                  <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
-                    colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
-                  </lord-icon>
-                  <h5 class="mt-2">Maaf! Data yang anda cari tidak ada</h5>
-                  <p class="text-muted mb-0">Harap Perbaiki kata kunci yang anda cari. </p>
+        <div class="card-body">
+  <div class="table-responsive table-card mt-3 mb-1">
+    <table class="table align-middle table-nowrap" id="customerTable">
+      <thead class="table-light">
+        <tr>
+          <th><input type="checkbox" id="selectAll"></th>
+          <th>No</th>
+          <th class="sort" data-sort="customer_name">NIK</th>
+          <th class="sort" data-sort="no_pendaftar">No Pendaftaran</th>
+          <th class="sort" data-sort="customer_name">Nama Pendaftar</th>
+          <th class="sort" data-sort="date">Tanggal Daftar</th>
+          <th class="sort" data-sort="email">Gelombang</th>
+          <th class="sort" data-sort="phone">Program Studi</th>
+          <th class="sort" data-sort="status">Status ACC</th>
+          <th class="sort" data-sort="status-ujian">Status Ujian</th>
+          <th class="sort" data-sort="action">Aksi</th>
+        </tr>
+      </thead>
+
+      <tbody class="list form-check-all" id="tbodyPendaftarID">
+        @foreach ($camaba_acc as $i => $row)
+          <tr>
+            <td>
+              <input 
+                type="checkbox" 
+                class="selectCheckbox" 
+                data-id="{{ $row->detailPendaftar->id }}" 
+                data-status-ujian="{{ $row->detailPendaftar->status_ujian }}"
+                data-status-acc="{{ $row->detailPendaftar->status_acc }}">
+            </td>
+
+            <td>{{ ++$i }}</td>
+            <td class="customer_name">{{ $row->user->nik ?? 'Tidak Ada' }}</td>
+            <td class="no_pendaftar">{{$row->detailPendaftar->kode_pendaftaran ?? 'Tidak Ada'}}</td>
+            <td class="customer_name">{{ $row->nama ?? 'Tidak Ada' }}</td>
+            <td class="date">{{ $row->detailPendaftar->tanggal_daftar ?? 'Tidak Ada' }}</td>
+            <td class="email">{{ $row->gelombangPendaftaran?->nama_gelombang ?? 'Tidak Ada' }}</td>
+            <td class="phone">{{ $row->programStudi?->nama_program_studi ?? 'Tidak Ada' }}</td>
+
+            {{-- Status ACC --}}
+            <td class="status">
+              @if ($row->detailPendaftar?->status_acc === 'sudah')
+                <span class="badge badge-soft-success text-uppercase">Sudah</span>
+              @else
+                <span class="badge badge-soft-danger text-uppercase">Belum</span>
+              @endif
+            </td>
+
+            {{-- Status Ujian --}}
+            <td class="status-ujian text-center">
+              @if ($row->detailPendaftar?->status_ujian == 'sudah')
+                <span class="badge badge-soft-success text-uppercase">Lulus</span>
+              @else
+                <a class="badge badge-soft-danger text-uppercase"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal-{{ $row->detailPendaftar->id ?? '' }}">
+                  {{ ucfirst($row->detailPendaftar?->status_ujian ?? 'Belum Ujian') }}
+                </a>
+
+                {{-- Modal Update Ujian --}}
+                <div class="modal fade" id="exampleModal-{{ $row->detailPendaftar->id ?? '' }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Update Status Ujian</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                      </div>
+                      <form action="{{ route('status-ujian.update', ['id' => $row->detailPendaftar->id ?? '']) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                          Apakah Anda yakin ingin mengubah status Ujian?
+                          <input type="hidden" name="status_ujian" value="sudah">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                          <button type="submit" class="btn btn-primary">Ya</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
+              @endif
+            </td>
+
+            {{-- Aksi --}}
+            <td>
+              <div class="d-flex gap-2">
+                <button type="button" id="detailPendaftar" class="btn btn-warning btn-icon rounded-pill"
+                        data-bs-toggle="modal" data-id="{{ $row->id }}" data-bs-target="#showModal{{ $row->id }}">
+                  <i class="ri-information-line"></i>
+                </button>
+                <button type="button" class="btn btn-primary btn-icon rounded-pill"
+                        data-bs-toggle="modal" data-bs-target="#updateRecordModal{{ $row->id }}">
+                  <i class="ri-check-double-fill"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-icon rounded-pill"
+                        data-bs-toggle="modal" data-bs-target="#deleteRecordModal{{ $row->id }}">
+                  <i class="ri-delete-bin-fill"></i>
+                </button>
               </div>
-            </div>
-            <div class="d-flex justify-content-end">
-              <div class="pagination-wrap hstack gap-2">
-                <a class="page-item pagination-prev disabled" href="#">
-                  Previous
-                </a>
-                <ul class="pagination listjs-pagination mb-0"></ul>
-                <a class="page-item pagination-next" href="#">
-                  Next
-                </a>
-              </div>
-            </div>
-          </div><!-- end card -->
+            </td>
+          </tr>
+        @endforeach
+      </tbody>
+    </table>
+
+    {{-- Tidak ada hasil --}}
+    <div class="noresult" style="display: none">
+      <div class="text-center">
+        <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
+                   colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
+        </lord-icon>
+        <h5 class="mt-2">Maaf! Data yang anda cari tidak ada</h5>
+        <p class="text-muted mb-0">Harap perbaiki kata kunci yang anda cari.</p>
+      </div>
+    </div>
+  </div>
+
+  {{-- Pagination --}}
+  <div class="d-flex justify-content-end">
+    <div class="pagination-wrap hstack gap-2">
+      <a class="page-item pagination-prev disabled" href="#">Previous</a>
+      <ul class="pagination listjs-pagination mb-0"></ul>
+      <a class="page-item pagination-next" href="#">Next</a>
+    </div>
+  </div>
+</div>
+
         </div>
       </div>
       <!-- end col -->
@@ -1086,68 +1102,97 @@
     });
 </script>
 <script>
-  document.getElementById('updateSelected').addEventListener('click', function() {
-      // Ambil semua checkbox yang terpilih
-      const selectedCheckboxes = document.querySelectorAll('.selectCheckbox:checked');
-      
-      if (selectedCheckboxes.length === 0) {
-          // Menampilkan SweetAlert jika tidak ada data yang dipilih
-          Swal.fire({
-              icon: 'warning',
-              title: 'Peringatan!',
-              text: 'Pilih data yang ingin diupdate.'
-          });
-          return;
+  function getSelectedIds(statusType) {
+    const allChecked = document.querySelectorAll('.selectCheckbox:checked');
+    const idsToUpdate = [];
+    let alreadyUpdated = 0;
+
+    allChecked.forEach(cb => {
+      const currentStatus = cb.getAttribute(`data-status-${statusType}`);
+      if (currentStatus !== 'sudah') {
+        idsToUpdate.push(cb.getAttribute('data-id'));
+      } else {
+        alreadyUpdated++;
       }
+    });
 
-      // Ambil ID dari checkbox yang terpilih
-      const selectedIds = [...selectedCheckboxes].map(function(checkbox) {
-          return checkbox.getAttribute('data-id');
-      });
+    return { idsToUpdate, alreadyUpdated };
+  }
 
-      // Kirim data ke server untuk diupdate
-      fetch("{{ route('status-ujian.update.selected') }}", {
-          method: 'PUT',
-          headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-TOKEN': '{{ csrf_token() }}'
-          },
-          body: JSON.stringify({
-              ids: selectedIds,
-              status_ujian: 'sudah' // Status yang ingin diupdate
-          })
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.success) {
-              // Menampilkan SweetAlert sukses
-              Swal.fire({
-                  icon: 'success',
-                  title: 'Berhasil!',
-                  text: 'Status ujian berhasil diperbarui.'
-              }).then(() => {
-                  location.reload(); // Reload halaman untuk melihat perubahan
-              });
-          } else {
-              // Menampilkan SweetAlert gagal
-              Swal.fire({
-                  icon: 'error',
-                  title: 'Gagal!',
-                  text: 'Gagal mengupdate status ujian.'
-              });
-          }
-      })
-      .catch(error => {
-          console.error("Terjadi kesalahan:", error);
-          // Menampilkan SweetAlert jika ada error
-          Swal.fire({
-              icon: 'error',
-              title: 'Error!',
-              text: 'Terjadi kesalahan saat memproses permintaan.'
-          });
+  function updateStatus(statusType) {
+    const { idsToUpdate, alreadyUpdated } = getSelectedIds(statusType);
+
+    if (alreadyUpdated > 0) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Info',
+        text: `${alreadyUpdated} data sudah memiliki status '${statusType}', tidak diupdate ulang.`
       });
+    }
+
+    if (idsToUpdate.length === 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Tidak Ada yang Bisa Diupdate',
+        text: 'Semua data yang dipilih sudah memiliki status yang sama.'
+      });
+      return;
+    }
+
+    const payload = { ids: idsToUpdate };
+    if (statusType === 'ujian') {
+      payload.status_ujian = 'sudah';
+    } else if (statusType === 'acc') {
+      payload.status_acc = 'sudah';
+    }
+
+    fetch("{{ route('status-ujian.update.selected') }}", {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil!',
+          text: 'Status berhasil diperbarui.'
+        }).then(() => {
+          const modal = bootstrap.Modal.getInstance(document.getElementById('statusModal'));
+          if (modal) modal.hide();
+          location.reload();
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal!',
+          text: 'Gagal mengupdate status.'
+        });
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Terjadi kesalahan pada server.'
+      });
+    });
+  }
+
+  document.getElementById('updateUjian').addEventListener('click', function () {
+    updateStatus('ujian');
+  });
+
+  document.getElementById('updateAcc').addEventListener('click', function () {
+    updateStatus('acc');
   });
 </script>
+
 
 
 

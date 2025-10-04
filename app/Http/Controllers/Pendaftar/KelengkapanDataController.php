@@ -259,63 +259,47 @@ class KelengkapanDataController extends Controller
 
     }
 
-    public function index($id)
-    {
-        $client = new Client();
-        $authToken = 'Bearer ' . '987|n5zdbFBJX7C94ROXgTyKNLaUMRHFiOT5GhElkvxd';
-    
-        // Caching data API agar tidak terlalu banyak request
-        $provinsi = Cache::remember('provinsi_data', 60 * 60, function () use ($client, $authToken) {
-            $response = $client->get('https://alamat.thecloudalert.com/api/provinsi/get/', [
-                'headers' => ['Authorization' => $authToken],
-            ]);
-            return json_decode($response->getBody(), true)['result'] ?? [];
-        });
-    
-        $kabupatenKotaData = Cache::remember('kabupaten_data', 60 * 60, function () use ($client, $authToken) {
-            $response = $client->get('https://alamat.thecloudalert.com/api/kabkota/get', [
-                'headers' => ['Authorization' => $authToken],
-            ]);
-            return json_decode($response->getBody(), true)['result'] ?? [];
-        });
-    
-        $kecamatan = Cache::remember('kecamatan_data', 60 * 60, function () use ($client, $authToken) {
-            $response = $client->get('https://alamat.thecloudalert.com/api/kelurahan/get', [
-                'headers' => ['Authorization' => $authToken],
-            ]);
-            return json_decode($response->getBody(), true)['result'] ?? [];
-        });
-    
-        // Mengambil data pendaftar dari database
-        $pendaftar = Pendaftar::where('id', $id)->with(['user', 'atribut'])->firstOrFail();
-        
-        // Data statis langsung didefinisikan
-        $jenis_tinggal = ['kontrak', 'sewa', 'kos', 'rumah'];
-        $negara = ['indonesia'];
-        $agama = ['islam', 'kristen'];
-        $ukuran = ['s', 'm', 'l', 'xl', 'xxl'];
-        $kendaraan = ['sepeda motor', 'mobil', 'sepeda gayung'];
-    
-        // Mengambil data pendidikan, profesi, dan pendapatan dengan eager loading untuk efisiensi
-        $pendidikan = ['SD', 'SMP','SMA', 'S1', 'S2', 'S3'];
-        $profesi = ['Wiraswasta', 'PNS', 'PETANI', 'DAGANG'];
-        $pendapatan = ['Dibawah 3.000.000', 'Diatas 3.000.000'];
-    
-        // Form Berkas Pendukung
-        $list_berkas = BerkasGelombangTransaksi::where('gelombang_id', $pendaftar->gelombang_id)
-            ->with('berkas')
-            ->get();
-        
-        $atributGambars = AtributGambar::all();
-        // dd($pendaftar)->all;
-        // dd(request()->all());
+public function index($id)
+{
+    set_time_limit(60); // bisa diperpanjang kalau perlu
 
-        return view('pendaftar.kelengkapan-data.kelengkapan-data-lanjutan', compact(
-            'pendaftar', 'kendaraan', 'jenis_tinggal', 'negara', 'provinsi',
-            'kabupatenKotaData', 'kecamatan', 'agama', 'ukuran',
-            'pendidikan', 'profesi', 'pendapatan', 'list_berkas', 'atributGambars'
-        ));
-    }
+    $client = new Client();
+    $authToken = 'Bearer 987|n5zdbFBJX7C94ROXgTyKNLaUMRHFiOT5GhElkvxd';
+
+    // Caching provinsi saja (karena dibutuhkan di awal)
+    $provinsi = Cache::remember('provinsi_data', 60 * 60, function () use ($client, $authToken) {
+        $response = $client->get('https://alamat.thecloudalert.com/api/provinsi/get/', [
+            'headers' => ['Authorization' => $authToken],
+        ]);
+        return json_decode($response->getBody(), true)['result'] ?? [];
+    });
+
+    // Ambil data pendaftar
+    $pendaftar = Pendaftar::where('id', $id)->with(['user', 'atribut'])->firstOrFail();
+
+    // Data statis
+    $jenis_tinggal = ['kontrak', 'sewa', 'kos', 'rumah'];
+    $negara = ['indonesia'];
+    $agama = ['islam', 'kristen'];
+    $ukuran = ['s', 'm', 'l', 'xl', 'xxl'];
+    $kendaraan = ['sepeda motor', 'mobil', 'sepeda gayung'];
+    $pendidikan = ['SD', 'SMP', 'SMA', 'S1', 'S2', 'S3'];
+    $profesi = ['Wiraswasta', 'PNS', 'PETANI', 'DAGANG'];
+    $pendapatan = ['Dibawah 3.000.000', 'Diatas 3.000.000'];
+
+    // Berkas yang harus diunggah
+    $list_berkas = BerkasGelombangTransaksi::where('gelombang_id', $pendaftar->gelombang_id)
+        ->with('berkas')->get();
+
+    // Gambar atribut tambahan
+    $atributGambars = AtributGambar::all();
+
+    return view('pendaftar.kelengkapan-data.kelengkapan-data-lanjutan', compact(
+        'pendaftar', 'kendaraan', 'jenis_tinggal', 'negara', 'provinsi',
+        'agama', 'ukuran', 'pendidikan', 'profesi', 'pendapatan',
+        'list_berkas', 'atributGambars'
+    ));
+}
 
     public function updateLanjutan(Request $request, $id)
     {

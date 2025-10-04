@@ -46,12 +46,14 @@
         /* Efek blur di belakang navbar */
         transition: all 0.3s ease-in-out;
     }
+    
     </style>
 
 
 </head>
 
-<body data-bs-spy="scroll" data-bs-target="#navbar-example">
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="150" tabindex="0">
+
 
     <!-- Begin page -->
     <div class="layout-wrapper landing">
@@ -1087,7 +1089,29 @@
             .catch(error => console.error('Error:', error));
     });
     </script>
+<script>
+    document.addEventListener("scroll", function () {
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll("#navbar-example .nav-link");
 
+  let current = "";
+
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop - 160; // offset tinggi navbar
+    if (pageYOffset >= sectionTop) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach((link) => {
+    link.classList.remove("active");
+    if (link.getAttribute("href") === "#" + current) {
+      link.classList.add("active");
+    }
+  });
+});
+
+</script>
 
 
 </body>

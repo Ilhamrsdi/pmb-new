@@ -26,7 +26,7 @@ class GelombangController extends Controller
             $programStudi2Ids = json_decode($g->program_studi_2ids); // Program Studi 2
 
             // Ambil nama program studi 1 dan 2 berdasarkan ID
-            $programStudi1 = ProgramStudi::whereIn('id', $programStudi1Ids)->get();
+            $programStudi1 = ProgramStudi::where('id', $programStudi1Ids)->get();
             // Pastikan setiap ID adalah UUID yang valid
             $validProgramStudi2Ids = array_filter($programStudi2Ids, function ($id) {
                 return \Ramsey\Uuid\Guid\Guid::isValid($id);

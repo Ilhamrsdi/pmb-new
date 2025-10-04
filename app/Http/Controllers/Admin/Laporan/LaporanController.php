@@ -65,7 +65,7 @@ class LaporanController extends Controller
         $data_gelombang = GelombangPendaftaran::get();
     
         // Ambil data program studi
-        $data_prodi = RefPorgramStudi::all();
+        $data_prodi = ProgramStudi::all();
     
         // Persiapkan data untuk grafik
         $prodi_names = $data_prodi->pluck('nama_program_studi')->toArray(); // Nama-nama prodi
