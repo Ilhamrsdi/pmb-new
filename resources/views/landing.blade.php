@@ -4,64 +4,106 @@
 
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-
     <meta charset="utf-8" />
     <title>PMB Politeknik Negeri Banyuwangi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
-    <!-- App favicon -->
+    <meta content="Pendaftaran Mahasiswa Baru Politeknik Negeri Banyuwangi" name="description" />
+    <meta content="Poliwangi" name="author" />
+    
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
-    <!--Swiper slider css-->
     <link href="{{ asset('assets/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css" />
-    {{--  --}}
-    <!-- Layout config Js -->
-    {{-- <script src="{{ asset('assets/js/layout.js') }}"></script> --}}
-    <!-- Bootstrap Css -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- Icons Css -->
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- App Css-->
     <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- swiper css-->
-    {{-- <link href="{{ asset('assets/libs/swiper/swiper.min.css') }}" /> --}}
-    <!-- custom Css-->
-    {{-- <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" /> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
     <style>
-    .demo-img-patten-top img {
-        position: relative;
-        transition: transform 1.5s ease-in-out;
-        max-width: 100%;
-        /* Ensure images are responsive */
-        height: auto;
-        /* Maintain aspect ratio */
+        :root {
+            --primary-color: #0056b3; /* Biru Poliwangi */
+            --warning-color: #ffc107; /* Kuning/Warning untuk CTA */
+        }
+        
+        .navbar {
+            /* Membuat Navbar sedikit transparan dengan blur */
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hero-section {
+            padding-top: 100px;
+            padding-bottom: 70px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            background-color: #f7f9fc; 
+        }
+
+        /* Card untuk Gelombang Pendaftaran (Horizontal/Modern) */
+        .gelombang-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            border-left: 5px solid var(--primary-color); 
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .gelombang-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-badge {
+            font-size: 0.8em;
+            padding: 5px 10px;
+            border-radius: 50px;
+        }
+        
+        /* Tambahan untuk tata cara (FAQ style) */
+        .custom-accordion-border .accordion-button:not(.collapsed) {
+            color: var(--primary-color);
+            background-color: #eaf1fa;
+            border-color: var(--primary-color);
+        }
+       .section {
+        /* Tambahkan padding di bagian atas setiap section */
+        padding-top: 50px !important; 
     }
 
-    .navbar {
-        background: rgba(255, 255, 255, 0.8) !important;
-        /* Warna putih dengan transparansi */
-        backdrop-filter: blur(10px);
-        /* Efek blur di belakang navbar */
-        transition: all 0.3s ease-in-out;
+    /* Mengganti ID target agar berada 80px di atas visual section */
+    .section[id] {
+        padding-top: 80px !important; /* Jarak agar konten di bawah navbar */
+        margin-top: -80px !important; /* Tarik section ke atas untuk scrollspy */
+    }
+
+    /* Kecualikan Hero section agar tidak double padding */
+    #hero {
+        padding-top: 100px !important; /* Gunakan padding default yang tinggi */
+        margin-top: 0 !important;
     }
     
+    /* Perbaikan kecil pada navbar agar lebih solid */
+    .navbar {
+        min-height: 70px; /* Tambahkan sedikit tinggi agar offset stabil */
+        background: rgba(255, 255, 255, 0.98) !important; 
+        backdrop-filter: blur(8px);
+    }
+    }
     </style>
-
 
 </head>
 
-<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="150" tabindex="0">
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="0" tabindex="0">
 
-
-    <!-- Begin page -->
     <div class="layout-wrapper landing">
+        
         <nav class="navbar navbar-expand-lg navbar-landing fixed-top" id="navbar">
             <div class="container">
                 <a class="navbar-brand" href="/">
-                    <img src="assets/images/logo-dark.svg" class="card-logo card-logo-dark" alt="logo dark" height="50">
-                    {{-- <img src="assets/images/logo-light.png" class="card-logo card-logo-light" alt="logo light" height="50"> --}}
+                    <img src="assets/images/logo-dark.svg" class="card-logo card-logo-dark" alt="logo dark" height="40">
                 </a>
                 <button class="navbar-toggler py-0 fs-20 text-body" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -75,16 +117,16 @@
                             <a class="nav-link active" href="#hero">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#layanan">Layanan</a>
+                            <a class="nav-link" href="#layanan">Gelombang</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#alurpendaftaran">Alur Pendaftaran</a>
+                            <a class="nav-link" href="#alurpendaftaran">Alur</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#tata_cara">Tata Cara</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#pendaftaran">Pendaftaran</a>
+                            <a class="nav-link" href="#pendaftaran">Daftar</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#pengumuman">Pengumuman</a>
@@ -95,187 +137,171 @@
                     </ul>
 
                     <div class="">
-                        <a href="{{ url('login') }}" class="btn btn-primary">Sign In</a>
+                        <a href="#pendaftaran" class="btn btn-warning shadow-sm me-2 fw-bold">Daftar PMB</a>
+                        <a href="{{ url('login') }}" class="btn btn-outline-primary">Sign In</a>
                     </div>
                 </div>
 
             </div>
         </nav>
-        <!-- end navbar -->
-
-        <!-- start hero section -->
-        <section class="section pb-0 hero-section" id="hero">
+        <section class="section hero-section" id="hero">
             <div class="bg-overlay bg-overlay-pattern"></div>
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-sm-10">
-                        <div class="text-center mt-lg-5 pt-5">
-                            <h1 class="display-6 fw-semibold mb-3 lh-base">Pendaftaran Mahasiswa Baru
-                                <p class="lead text-muted lh-base">Politeknik Negeri Banyuwangi</p>
-
-                                <div class="d-flex gap-2 justify-content-center mt-4">
-                                    <a href="#pendaftaran" class="btn btn-primary">Daftar Sekarang <i
-                                            class="ri-arrow-right-line align-middle ms-1"></i></a>
-                                    <a href="https://www.youtube.com/embed/bnbKP_R8uDg?autoplay=1&controls=0&start=0&end=0&modestbranding=1&wmode=transparent&enablejsapi=1&loop=1&rel=0&mute=1&playlist=bnbKP_R8uDg"
-                                        class="btn btn-danger">Lihat Video <i
-                                            class="ri-eye-line align-middle ms-1"></i></a>
-                                </div>
+                <div class="row align-items-center">
+                    
+                    <div class="col-lg-7 col-sm-12">
+                        <div class="mt-lg-5 pt-5 text-center text-lg-start">
+                            <h1 class="display-5 fw-bold mb-3 lh-base text-primary">
+                                Pendaftaran Mahasiswa Baru 
+                                <span class="d-block text-danger">POLITEKNIK NEGERI BANYUWANGI</span>
+                            </h1>
+                            <p class="lead text-muted mb-4">
+                                Wujudkan karir cemerlang di industri. Kuliah Vokasi: Lulus Cepat, Siap Kerja!
+                            </p>
+                            
+                            <a href="#layanan" class="btn btn-primary btn-lg shadow-sm">
+                                Cek Gelombang Aktif <i class="ri-arrow-right-line align-middle ms-1"></i>
+                            </a>
+                            <a href="https://www.youtube.com/embed/bnbKP_R8uDg?autoplay=1&controls=0&start=0&end=0&modestbranding=1&wmode=transparent&enablejsapi=1&loop=1&rel=0&mute=1&playlist=bnbKP_R8uDg"
+                                class="btn btn-link text-danger ms-2">
+                                <i class="ri-play-circle-line me-1"></i> Lihat Video
+                            </a>
                         </div>
+                    </div>
 
-                        <div class="mt-4 mt-sm-5 pt-sm-5 mb-sm-n5 demo-carousel">
-                            <div class="demo-img-patten-top d-none d-sm-block">
-                                <img src="assets/images/landing/img-pattern.svg" class="d-block img-fluid" alt="...">
+                    <div class="col-lg-5 col-sm-12 mt-4 mt-lg-0">
+                        <div class="card shadow-lg p-3 border-0">
+                            <div class="text-center mb-3">
+                                <h5 class="fw-bold text-primary">Daftar Cepat</h5>
                             </div>
-                            <div class="demo-img-patten-bottom d-none d-sm-block">
-                                <img src="assets/images/landing/img-pattern.svg" class="d-block img-fluid" alt="...">
-                            </div>
-                            <div class="carousel slide carousel-fade" data-bs-ride="carousel">
-                                <div class="carousel-inner shadow-lg p-2 bg-white rounded">
-                                    <div class="carousel-item active" data-bs-interval="2000">
-                                        <img src="assets/images/demos/hero-image-1.png" class="d-block w-100"
-                                            alt="Hero Image Politeknik Negeri Banyuwangi">
-                                    </div>
-                                    <div class="carousel-item" data-bs-interval="2000">
-                                        <img src="assets/images/demos/hero-image-2.png" class="d-block w-100"
-                                            alt="Hero Image Politeknik Negeri Banyuwangi">
-                                    </div>
-                                    <div class="carousel-item" data-bs-interval="2000">
-                                        <img src="assets/images/demos/hero-image-3.png" class="d-block w-100"
-                                            alt="Hero Image Politeknik Negeri Banyuwangi">
-                                    </div>
-                                    <div class="carousel-item" data-bs-interval="2000">
-                                        <img src="assets/images/demos/hero-image-4.png" class="d-block w-100"
-                                            alt="Hero Image Politeknik Negeri Banyuwangi">
-                                    </div>
+                            <form method="POST" action="{{ route('register') }}">
+                                @csrf
+                                <div class="mb-3">
+                                    <input name="nama" type="text" class="form-control" placeholder="Nama Lengkap" required>
                                 </div>
-                            </div>
+                                <div class="mb-3">
+                                    <input name="email" type="email" class="form-control" placeholder="Email Aktif" required>
+                                </div>
+                                <div class="mb-3">
+                                    <select class="form-select" name="gelombang" id="gelombang_hero" required>
+                                        <option value="" selected disabled>Pilih Gelombang Pendaftaran</option>
+                                        @forelse($gelombang as $h)
+                                            @if(strtolower(trim($h->status)) == 'active')
+                                                <option value="{{ $h->id }}">{{ $h->nama_gelombang }}</option>
+                                            @endif
+                                        @empty
+                                            <option disabled>Tidak ada gelombang aktif</option>
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-warning w-100 fw-bold">LANJUTKAN PENDAFTARAN</button>
+                            </form>
+                            <small class="text-center text-muted mt-2">Daftar sekarang, lengkapi data nanti.</small>
                         </div>
                     </div>
                 </div>
-                <!-- end row -->
             </div>
-            <!-- end container -->
             <div class="position-absolute start-0 end-0 bottom-0 hero-shape-svg">
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
                     viewBox="0 0 1440 120">
                     <g mask="url(&quot;#SvgjsMask1003&quot;)" fill="none">
-                        <path d="M 0,118 C 288,98.6 1152,40.4 1440,21L1440 140L0 140z">
-                        </path>
+                        <path d="M 0,118 C 288,98.6 1152,40.4 1440,21L1440 140L0 140z"></path>
                     </g>
                 </svg>
             </div>
-            <!-- end shape -->
         </section>
-        <!-- end hero section -->
-
-        <!-- start layanan -->
-        <section class="section" id="layanan">
+        <section class="section pt-5" id="layanan">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="text-center mb-5">
-                            <h1 class="mb-3 ff-secondary fw-semibold lh-base">A Collaborative Learning By Enterprising
-                            </h1>
-                            <p class="text-muted">Poliwangi memegang teguh keyakinan bahwa kolaborasi penting dalam
-                                proses
-                                pembelajaran saat ini, tidak hanya dari segi pengetahuan dan kemampuan teoritis tetapi
-                                juga untuk
-                                penerapan kesatuan ilmu dalam dunia bisnis dan dunia kerja.</p>
+                            <h3 class="mb-3 ff-secondary fw-semibold lh-base text-primary">Gelombang Pendaftaran Aktif</h3>
+                            <p class="text-muted">Poliwangi memegang teguh keyakinan bahwa kolaborasi penting dalam proses pembelajaran.</p>
                         </div>
                     </div>
-                    <!-- end col -->
                 </div>
-                <!-- end row -->
-                <div class="row">
-                    @foreach ($gelombang as $key => $h)
-                    <div class='col-sm-6 col-xl-3'>
-                        <div class="card">
-                            <div class="card-body bg-primary text-light text-center py-5 ">
-                                <div class="position-relative">
-                                    <h3 class="card-title mb-3 text-light">
-                                        {{ Str::upper($h->nama_gelombang) }}
-                                    </h3>
-                                    @if (strtolower($h->status) == 'active')
-                                    <span
-                                        class="position-absolute top-0 start-100 translate-middle badge badge-label bg-success">
-                                        {{ $h->status }}
-                                    </span>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        @forelse ($gelombang as $h)
+                        <div class='card gelombang-card shadow-sm'>
+                            <div class="card-body d-md-flex align-items-center justify-content-between py-4 px-4">
+                                <div class="flex-grow-1 me-3">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="ri-calendar-event-line fs-4 me-2 text-primary"></i>
+                                        <h4 class="card-title mb-0 fw-bold">
+                                            {{ Str::upper($h->nama_gelombang) }}
+                                        </h4>
+                                        @if (strtolower(trim($h->status)) == 'active')
+                                        <span class="badge bg-success ms-3 status-badge">
+                                            {{ $h->status }}
+                                        </span>
+                                        @else
+                                        <span class="badge bg-danger ms-3 status-badge">
+                                            {{ $h->status }}
+                                        </span>
+                                        @endif
+                                    </div>
+                                    <h6 class="card-subtitle text-muted mb-2">{{ $h->tahun_ajaran }}</h6>
+                                    <p class="card-text text-muted mb-md-0">
+                                        <i class="ri-time-line me-1"></i>
+                                        **Periode:** {{ Carbon\Carbon::parse($h->tanggal_mulai)->format('d M Y') . ' - ' . Carbon\Carbon::parse($h->tanggal_selesai)->format('d M Y') }}
+                                    </p>
+                                </div>
+                                
+                                <div class="flex-shrink-0 text-md-end mt-3 mt-md-0">
+                                    @if (strtolower(trim($h->status)) == 'active')
+                                    <a href="#pendaftaran" class="btn btn-primary shadow" 
+                                        onclick="document.getElementById('gelombang').value='{{ $h->id }}'; document.getElementById('gelombang_hero').value='{{ $h->id }}';">
+                                        Daftar Sekarang <i class="ri-arrow-right-line align-middle ms-1"></i>
+                                    </a>
                                     @else
-                                    <span
-                                        class="position-absolute top-0 start-100 translate-middle badge badge-label bg-danger">
-                                        {{ $h->status }}
-                                    </span>
+                                    <button class="btn btn-secondary" disabled>Telah Ditutup</button>
                                     @endif
                                 </div>
-
-                                <h6 class="card-subtitle font-14 text-light mb-3">{{ $h->tahun_ajaran }}</h6>
-                                <p class="card-subtitle text-light">
-                                    {{ Carbon\Carbon::parse($h->tanggal_mulai)->format('d M Y') . ' - ' . Carbon\Carbon::parse($h->tanggal_selesai)->format('d M Y') }}
-                                </p>
-                            </div>
-                            <div class="card-body bg-light">
-                                <p id="card-text{{ $h->id }}" class="card-text">
-                                    {{ Str::limit($h->deskripsi, 20) }}
-                                </p>
-                                <div id="more{{ $h->id }}" style="display:none;">
-                                    <p class="mt-2">{{ $h->deskripsi }} </p>
-                                    <a href="#pendaftaran" onclick="daftar( '{{ $h->id }}' )"
-                                        class="btn btn-success w-100">
-                                        Daftar <i class="ri-login-box-line align-middle ms-1 lh-1"></i></a>
-                                </div>
-                            </div>
-                            <div class="card-footer d-flex justify-content-between">
-                                <a href="javascript:void(0);" style="display:none; text-decoration: none;"
-                                    id="close{{ $h->id }}" onclick="hide( '{{ $h->id }}' )"
-                                    class="card-link link-danger">Close <i
-                                        class="ri-close-line ms-1 align-middle lh-1"></i></a>
-                                <a href="javascript:void(0);" style="text-decoration: none"
-                                    onclick="show( '{{ $h->id }}' )" class="card-link link-secondary">Read More <i
-                                        class="ri-arrow-right-s-line ms-1 align-middle lh-1"></i></a>
                             </div>
                         </div>
+                        @empty
+                        <div class="alert alert-info text-center">
+                            Saat ini tidak ada gelombang pendaftaran yang aktif.
+                        </div>
+                        @endforelse
                     </div>
-                    @endforeach
                 </div>
             </div>
-            <section class="alurpendaftaran" id="alurpendaftaran">
-                <div class="container">
-
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <div class="text-center mb-5">
-                                <h3 class="mb-3 fw-semibold">Alur Pendaftaran</h3>
-                                @if($alurPendaftaran)
-                                <p class="text-muted mb-4 ff-secondary">{{ $alurPendaftaran->keterangan }}</p>
-                                <img src="{{ asset('storage/' . $alurPendaftaran->gambar) }}" alt="alur pendaftaran"
-                                    class="img-fluid">
-                                @else
-                                <p class="text-muted mb-4 ff-secondary">Gambar atau informasi alur pendaftaran tidak
-                                    tersedia.</p>
-                                @endif
-                            </div>
+            </section>
+        <section class="section py-5 bg-light" id="alurpendaftaran">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center mb-5">
+                            <h3 class="mb-3 fw-semibold">Alur Pendaftaran</h3>
+                            @if($alurPendaftaran)
+                            <p class="text-muted mb-4 ff-secondary">{{ $alurPendaftaran->keterangan }}</p>
+                            <img src="{{ asset('storage/' . $alurPendaftaran->gambar) }}" alt="alur pendaftaran"
+                                class="img-fluid rounded shadow-lg">
+                            @else
+                            <p class="text-muted mb-4 ff-secondary">Gambar atau informasi alur pendaftaran tidak tersedia.</p>
+                            @endif
                         </div>
                     </div>
                 </div>
-            </section>
-            <section class="tanggalPenting" id="tanggalPenting">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-10">
-                            <div class="text-center mb-4">
-                                <h4 class="fw-semibold">Tanggal Penting Pendaftaran</h4>
-                            </div>
-
-                            @if($tanggal_penting->isEmpty())
-                            <div class="alert alert-warning text-center">
-                                Tanggal penting pendaftaran masih belum ada.
-                            </div>
-                            @else
-                            <table class="table table-bordered">
+                
+                <div class="row justify-content-center mt-5">
+                    <div class="col-lg-10">
+                        <div class="text-center mb-4">
+                            <h4 class="fw-semibold text-primary">Tanggal Penting Pendaftaran</h4>
+                        </div>
+                        @if($tanggal_penting->isEmpty())
+                        <div class="alert alert-warning text-center">
+                            Tanggal penting pendaftaran masih belum ada.
+                        </div>
+                        @else
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped align-middle">
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th class="text-center">Nama Kegiatan</th>
+                                        <th class="text-start">Nama Kegiatan</th>
                                         <th class="text-center">Tanggal Mulai</th>
                                         <th class="text-center">Tanggal Selesai</th>
                                     </tr>
@@ -284,7 +310,7 @@
                                     @foreach($tanggal_penting as $key => $item)
                                     <tr>
                                         <td class="text-center">{{ $key + 1 }}</td>
-                                        <td class="text-center">{{ $item->nama_kegiatan }}</td>
+                                        <td class="text-start">{{ $item->nama_kegiatan }}</td>
                                         <td class="text-center">
                                             {{ \Carbon\Carbon::parse($item->tanggal_mulai)->translatedFormat('d F Y') }}
                                         </td>
@@ -295,45 +321,35 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            @endif
                         </div>
+                        @endif
                     </div>
                 </div>
-            </section>
-
-
-            <!-- end container -->
+                </div>
         </section>
-        <!-- end layanan -->
-        <!-- start tata_cara -->
         <section class="section" id="tata_cara">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="text-center mb-5">
                             <h3 class="mb-3 fw-semibold">Tata Cara Pendaftaran</h3>
-                            <p class="text-muted mb-4 ff-secondary">Bacalah langkah-langkah atau tata cara pendaftaran
-                                terlebih
-                                dahulu sebelum mendaftar.</p>
+                            <p class="text-muted mb-4 ff-secondary">Bacalah langkah-langkah penting sebelum mendaftar.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- end row -->
-
-                <div class="row g-lg-5 g-4">
-                    <div class="col-lg-12">
-                        <div class="d-flex align-items-center mb-2">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="d-flex align-items-center mb-3">
                             <div class="flex-shrink-0 me-1">
-                                <i class="ri-question-line fs-24 align-middle text-success me-1"></i>
+                                <i class="ri-question-line fs-24 align-middle text-primary me-1"></i>
                             </div>
                             <div class="flex-grow-1">
-                                <h5 class="mb-0 fw-semibold">Pendaftaran</h5>
+                                <h5 class="mb-0 fw-semibold text-dark">Langkah-langkah Pendaftaran</h5>
                             </div>
                         </div>
-                        <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box"
-                            id="genques-accordion">
-                            @foreach ($tata_cara as $item)
+                        <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box" id="genques-accordion">
+                            @forelse ($tata_cara as $item)
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="{{ 'collapse-header-' . $loop->iteration }}">
                                     <button class="accordion-button {{ $loop->first ? '' : 'collapsed' }}" type="button"
@@ -348,773 +364,281 @@
                                     aria-labelledby="{{ 'collapse-header-' . $loop->iteration }}"
                                     data-bs-parent="#genques-accordion">
                                     <div class="accordion-body ff-secondary">
-                                        {{ $item->deskripsi }}
+                                        {!! $item->deskripsi !!}
                                     </div>
                                 </div>
                             </div>
-                            @endforeach
+                            @empty
+                            <div class="alert alert-info text-center">
+                                Tata cara pendaftaran sedang disusun. Silahkan cek berkala.
+                            </div>
+                            @endforelse
                         </div>
-
-                        <!--end accordion-->
-
                     </div>
-                    <!-- end col -->
                 </div>
-                <!-- end row -->
             </div>
-            <!-- end container -->
-        </section>
-        <!-- end tata_cara -->
-
-        <!-- start pendaftaran -->
-        <section class="section" id="pendaftaran">
+            </section>
+        <section class="section bg-light" id="pendaftaran">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="text-center mb-5">
-                            <h3 class="mb-3 fw-semibold">Daftar Sekarang</h3>
-                            <p class="text-muted mb-4 ff-secondary">Silahkan mengisi form pendaftaran dibawah ini
-                                dengan data yang
-                                sebenar-benarnya.</p>
+                            <h3 class="mb-3 fw-semibold">Formulir Pendaftaran Lengkap</h3>
+                            <p class="text-muted mb-4 ff-secondary">Silahkan mengisi form pendaftaran dibawah ini dengan data yang sebenar-benarnya untuk mendapatkan Virtual Account.</p>
                         </div>
                     </div>
                 </div>
-                <!-- end row -->
-
-                <div class="row gy-4" id="features">
-                    <div class="col-lg-6">
-                        <img src="assets/images/widget-img.png" alt="" class="img-fluid mx-auto">
-                    </div>
-                    <!-- end col -->
-                    <div class="col-lg-6">
-                        <div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="card p-4 shadow">
                             <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                                 @csrf
+                                <h5 class="mb-4 text-primary">Data Diri Calon Mahasiswa</h5>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-4">
-                                            <label for="nama" class="form-label fs-13">Nama</label>
-                                            <input name="nama" id="nama" type="text" class="form-control"
-                                                placeholder="Masukkan Nama">
+                                            <label for="nama" class="form-label fs-13">Nama Lengkap</label>
+                                            <input name="nama" id="nama" type="text" class="form-control" placeholder="Masukkan Nama" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-4">
-                                            <label for="email" class="form-label fs-13">Email</label>
-                                            <input name="email" id="email" type="email" class="form-control"
-                                                placeholder="Masukkan Email">
-                                            <small class="form-text text-success"> *Silahkan menggunakan Email Aktif
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-4">
-                                            <label for="nik" class="form-label fs-13">NIK</label>
-                                            <input name="nik" id="nik" type="number" class="form-control"
-                                                placeholder="Masukkan NIK">
+                                            <label for="email" class="form-label fs-13">Email Aktif</label>
+                                            <input name="email" id="email" type="email" class="form-control" placeholder="Masukkan Email" required>
+                                            <small class="form-text text-success"> *Kode VA akan dikirim ke email ini.</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-4">
-                                            <label for="no_hp" class="form-label fs-13">No Hp</label>
-                                            <input name="no_hp" id="no_hp" type="number" class="form-control"
-                                                placeholder="Masukkan No HP">
+                                            <label for="nik" class="form-label fs-13">NIK (Nomor Induk Kependudukan)</label>
+                                            <input name="nik" id="nik" type="number" class="form-control" placeholder="Masukkan NIK" required>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-4">
+                                            <label for="no_hp" class="form-label fs-13">No HP/WhatsApp</label>
+                                            <input name="no_hp" id="no_hp" type="number" class="form-control" placeholder="Masukkan No HP" required>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12">
                                         <div class="mb-4">
                                             <label for="sekolah" class="form-label fs-13">Asal Sekolah</label>
-                                            <input type="text" class="form-control" placeholder="Masukkan Asal Sekolah"
-                                                id="sekolah" name="sekolah" />
+                                            <input type="text" class="form-control" placeholder="Masukkan Asal Sekolah" id="sekolah" name="sekolah" required/>
                                         </div>
                                     </div>
                                 </div>
 
+                                <h5 class="mb-4 mt-3 text-primary">Pilihan Pendaftaran</h5>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mb-4">
+                                            <label for="gelombang" class="form-label fs-13">Gelombang Pendaftaran</label>
+                                            <select class="form-select" name="gelombang" id="gelombang" required>
+                                                <option value="" selected disabled>Pilih Gelombang Pendaftaran</option>
+                                                @forelse($gelombang as $h)
+                                                @if(strtolower(trim($h->status)) == 'active')
+                                                <option value="{{ $h->id }}">{{ $h->nama_gelombang }} - {{ Carbon\Carbon::parse($h->tanggal_mulai)->format('d/m') . ' s.d. ' . Carbon\Carbon::parse($h->tanggal_selesai)->format('d/m') }}</option>
+                                                @endif
+                                                @empty
+                                                <option disabled>Tidak ada gelombang aktif</option>
+                                                @endforelse
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label for="prodi" class="form-label fs-12">Pilihan Program Studi 1</label>
+                                            <select class="form-select" name="program_studi" id="prodi">
+                                                <option selected disabled>Pilih Program Studi</option>
+                                                </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label for="programStudi2" class="form-label fs-12">Pilihan Program Studi 2</label>
+                                            <select class="form-select" name="program_studi_2" id="programStudi2">
+                                                <option value="" selected>Pilih Program Studi (Opsional)</option>
+                                                </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label for="prodiLain" class="form-label fs-12">Pilihan Program Studi Lain</label>
+                                            <select class="form-select" name="prodi_lain" id="prodiLain">
+                                                <option value="">Pilih Program Studi Lain (Opsional)</option>
+                                                </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-lg-12 d-flex justify-content-between align-items-center">
+                                        <a data-bs-toggle="modal" data-bs-target="#forgetcode" class="btn btn-outline-warning">Lupa Kode Virtual Account?</a>
+                                        <input type="submit" id="submit" name="send" class="submitBnt btn btn-primary btn-lg px-5" value="DAFTAR & DAPATKAN VA">
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-
-
-
-
-
-                        <div class="col-lg-12">
-                            <div class="mb-4">
-                                <label for="gelombang" class="form-label fs-13">Gelombang Pendaftaran</label>
-                                <select class="form-select" aria-label="Default select example" name="gelombang"
-                                    id="gelombang">
-                                    <option value="" selected>Pilih Gelombang Pendaftaran</option>
-                                    @forelse($gelombang as $h)
-                                    @if(strtolower(trim($h->status)) == 'active')
-                                    <!-- Pastikan hanya menampilkan gelombang aktif -->
-                                    <option value="{{ $h->id }}">{{ $h->nama_gelombang }}</option>
-                                    @endif
-                                    @empty
-                                    <option disabled>Tidak ada gelombang aktif</option>
-                                    @endforelse
-                                </select>
-                            </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+        <section class="section bg-primary" id="pengumuman">
+            <div class="bg-overlay bg-overlay-pattern"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="text-center text-white mb-5">
+                            <i class="ri-megaphone-line display-4"></i>
+                            <h4 class="mt-2 text-white">Pengumuman Terbaru</h4>
                         </div>
-
-
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-4">
-                                    <label for="program_studi" class="form-label fs-12">Pilihan Program Studi 1</label>
-                                    <select class="form-select" name="program_studi" id="prodi">
-                                        <option selected>Pilih Program Studi</option>
-                                    </select>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        @forelse ($pengumuman as $item)
+                        <div class="col-sm-6 col-xl-4 mb-4">
+                            <div class="card shadow h-100">
+                                <img class="card-img-top img-fluid" src="{{ URL::asset('assets/images/small/img-2.jpg') }}" alt="Card image cap">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title mb-2 text-dark">{{ $item->judul_pengumuman }}</h5>
+                                    <p class="card-text mb-3 fs-6 flex-grow-1">
+                                        {!! Str::limit(strip_tags($item->isi_pengumuman), 100) !!}
+                                    </p>
+                                    <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                                        <small class="text-muted"><i class="ri-calendar-line me-1"></i>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('d M Y') }}</small>
+                                        <a href="{{ url('pengumuman/' . $item->id) }}" class="card-link link-primary fw-bold">Baca Selengkapnya <i class="ri-arrow-right-s-line ms-1"></i></a>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="col-lg-4">
-                                <div class="mb-4">
-                                    <label for="programStudi2" class="form-label fs-12">Pilihan Program Studi 2</label>
-                                    <select class="form-select" name="program_studi_2" id="programStudi2">
-                                        <option value="" selected>Pilih Program Studi</option>
-                                    </select>
+                        </div>
+                        @empty
+                        <div class="col-lg-8">
+                             <div class="alert alert-light text-center">
+                                 Belum ada pengumuman terbaru saat ini.
+                             </div>
+                        </div>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+            </section>
+        <section class="section" id="tentang">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center mb-5">
+                            <h3 class="mb-3 fw-semibold">Mengapa Bergabung dengan Poliwangi?</h3>
+                            <p class="text-muted mb-4 ff-secondary">Dengan arsitektur pembelajaran giat Poliwangi, kami membangun dan membina bangunan pembelajaran universitas yang kedepannya dapat membantu memperkuat berbasis ilmu pengetahuan bisnis di Indonesia.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-lg-4">
+                        <div class="process-card mt-4">
+                            <div class="process-arrow-img d-none d-lg-block">
+                                <img src="assets/images/landing/process-arrow-img.svg" alt="" class="img-fluid">
+                            </div>
+                            <div class="avatar-sm icon-effect mx-auto mb-4">
+                                <div class="avatar-title bg-soft-primary text-primary rounded-circle h1">
+                                    <i class="ri-quill-pen-line"></i>
                                 </div>
                             </div>
-
-                            <div class="col-lg-4">
-                                <div class="mb-4">
-                                    <label for="programStudi3" class="form-label fs-12">Pilihan Program Studi
-                                        Lain</label>
-                                    <select class="form-select" name="prodi_lain" id="prodiLain">
-                                        <option value="">Pilih Program Studi Lain</option>
-                                    </select>
+                            <h5>Kegiatan Belajar Mengajar yang baik</h5>
+                            <p class="text-muted ff-secondary">Diampu langsung oleh tenaga pendidik dan tenaga operasional yang profesional dan ahli di bidangnya masing masing.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="process-card mt-4">
+                            <div class="process-arrow-img d-none d-lg-block">
+                                <img src="assets/images/landing/process-arrow-img.svg" alt="" class="img-fluid">
+                            </div>
+                            <div class="avatar-sm icon-effect mx-auto mb-4">
+                                <div class="avatar-title bg-soft-warning text-warning rounded-circle h1">
+                                    <i class="ri-group-line"></i>
                                 </div>
                             </div>
+                            <h5>Kerja Sama Industri Luas</h5>
+                            <p class="text-muted ff-secondary">Memiliki jejaring kerjasama yang luas dengan berbagai perusahaan nasional dan multinasional untuk penempatan magang dan karir.</p>
                         </div>
-
-
-
-                        <div class="row">
-                            <div class="col-lg-12 text-end">
-                                <a data-bs-toggle="modal" data-bs-target="#forgetcode" class="btn btn-warning">Lupa Kode
-                                    Virtual Account
-                                    Pendaftaran</a>
-                                <input type="submit" id="submit" name="send" class="submitBnt btn btn-primary"
-                                    value="Daftar">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="process-card mt-4">
+                            <div class="avatar-sm icon-effect mx-auto mb-4">
+                                <div class="avatar-title bg-soft-danger text-danger rounded-circle h1">
+                                    <i class="ri-graduation-cap-line"></i>
+                                </div>
                             </div>
+                            <h5>Fokus Vokasi (Siap Kerja)</h5>
+                            <p class="text-muted ff-secondary">Pendidikan yang fokus pada keterampilan praktis, memastikan lulusan siap kerja dan dibutuhkan di dunia industri.</p>
                         </div>
+                    </div>
+                    </div>
+                </div>
+            </section>
+        <div class="modal fade" id="forgetcode" tabindex="-1" aria-labelledby="forgetcodeLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="forgetcodeLabel">Lupa Kode Virtual Account</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Masukkan Email yang Anda gunakan saat pendaftaran untuk mendapatkan kembali Kode Virtual Account Anda.</p>
+                        <form action="/lupa-va" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="recovery-email" class="form-label">Email Pendaftaran</label>
+                                <input type="email" class="form-control" id="recovery-email" name="email" placeholder="Masukkan email Anda" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Kirim Ulang Kode VA</button>
                         </form>
                     </div>
                 </div>
             </div>
-            <!-- end row -->
-    </div>
-    <!-- end container -->
-    </section>
-    <!-- end pendaftaran -->
-
-    <!-- start pengumuman -->
-    <section class="section bg-primary" id="pengumuman">
-        <div class="bg-overlay bg-overlay-pattern"></div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12">
-                    <div class="text-center">
-                        <div>
-                            <i class="ri-double-quotes-l text-success display-3"></i>
-                        </div>
-                        <h4 class="text-white mb-5">Pengumuman</h4>
-                    </div>
-                    <div class="row d-flex justify-content-center">
-                        @forelse ($pengumuman as $item)
-                        <div class="col-sm-6 col-xl-3">
-                            <div class="card">
-                                <img class="card-img-top img-fluid"
-                                    src="{{ URL::asset('assets/images/small/img-2.jpg') }}" alt="Card image cap">
-                                <div class="card-body">
-                                    <h4 class="card-title mb-2">{{ $item->judul_pengumuman }}</h4>
-                                    <p class="card-text mb-0 fs-6">
-                                        {!! Str::limit($item->isi_pengumuman, 100) !!}
-                                    </p>
-                                </div>
-                                <div class="card-footer d-flex justify-content-end">
-                                    <a href="{{ url('pengumuman/' . $item->id) }}" class="card-link link-secondary">Read
-                                        More <i class="ri-arrow-right-s-line ms-1 align-middle lh-1"></i></a>
-                                </div>
-                            </div><!-- end card -->
-                        </div><!-- end col -->
-                        @empty
-                        @endforelse
-                    </div>
-                </div>
-                <!-- end col -->
-            </div>
-            <!-- end row -->
         </div>
-        <!-- end container -->
-    </section>
-    <!-- end pengumuman -->
-
-    <!-- start Work Process -->
-    <section class="section" id="tentang">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="text-center mb-5">
-                        <h3 class="mb-3 fw-semibold">Bergabunglah bersama kami</h3>
-                        <p class="text-muted mb-4 ff-secondary">Dengan arsitektur pembelajaran giat Poliwangi dan
-                            institusi yang
-                            dimilikinya, Poliwangi telah bekerja sangat keras dalam dua tahun terakhir ini untuk
-                            membangun dan
-                            membina sebuah bangunan pembelajaran universitas yang kedepannya diharapkan dapat
-                            membantu memperkuat
-                            berbasis ilmu pengetahuan bisnis di Indonesia.</p>
-                    </div>
-                </div>
+        <footer class="bg-dark py-4">
+            <div class="container text-center text-white-50">
+                <p class="mb-0">&copy; <script>document.write(new Date().getFullYear())</script> PMB Politeknik Negeri Banyuwangi. All rights reserved.</p>
             </div>
-            <!-- end row -->
-
-            <div class="row text-center">
-                <div class="col-lg-4">
-                    <div class="process-card mt-4">
-                        <div class="process-arrow-img d-none d-lg-block">
-                            <img src="assets/images/landing/process-arrow-img.svg" alt="" class="img-fluid">
-                        </div>
-                        <div class="avatar-sm icon-effect mx-auto mb-4">
-                            <div class="avatar-title bg-transparent text-success rounded-circle h1">
-                                <i class="ri-quill-pen-line"></i>
-                            </div>
-                        </div>
-
-                        <h5>Kegiatan Belajar Mengajar yang baik</h5>
-                        <p class="text-muted ff-secondary">Diampu langsung oleh tenaga pendidik dan tenaga
-                            operasional yang
-                            profesional dan ahli di bidangnya masing masing.</p>
-                    </div>
-                </div>
-                <!-- end col -->
-                <div class="col-lg-4">
-                    <div class="process-card mt-4">
-                        <div class="process-arrow-img d-none d-lg-block">
-                            <img src="assets/images/landing/process-arrow-img.svg" alt="" class="img-fluid">
-                        </div>
-                        <div class="avatar-sm icon-effect mx-auto mb-4">
-                            <div class="avatar-title bg-transparent text-success rounded-circle h1">
-                                <i class="ri-building-line"></i>
-                            </div>
-                        </div>
-
-                        <h5>Fasilitas yang memadai</h5>
-                        <p class="text-muted ff-secondary">Sarana dan Prasarana yang bisa digunakan baik untuk
-                            kegiatan akademik
-                            maupun non akademik.Poliwangi lebih dari sekedar tempat belajar dimana ada berbagai
-                            kehidupan menarik
-                            yang menunggumu di luar kelas!
-                        </p>
-                    </div>
-                </div>
-                <!-- end col -->
-                <div class="col-lg-4">
-                    <div class="process-card mt-4">
-                        <div class="process-arrow-img d-none d-lg-block">
-                            <img src="assets/images/landing/process-arrow-img.svg" alt="" class="img-fluid">
-                        </div>
-                        <div class="avatar-sm icon-effect mx-auto mb-4">
-                            <div class="avatar-title bg-transparent text-success rounded-circle h1">
-                                <i class="ri-book-mark-line"></i>
-                            </div>
-                        </div>
-
-                        <h5>Metode Pembelajaran yang berkualitas</h5>
-                        <p class="text-muted ff-secondary">Kolaborasi antara pengetahuan dan kemampuan teoritis
-                            untuk penerapan
-                            kesatuan ilmu dalam dunia bisnis dan dunia kerja.</p>
-                    </div>
-                </div>
-                <!-- end col -->
-            </div>
-            <!-- end row -->
-        </div>
-        <!-- end container -->
-    </section>
-    <!-- end Work Process -->
-
-    <!-- start counter -->
-    <section class="py-5 position-relative bg-light">
-        <div class="container">
-            <div class="row text-center gy-4">
-                <div class="col-lg-3 col-6">
-                    <div>
-                        <h2 class="mb-2"><span class="counter-value" data-target="3.5">0</span>k</h2>
-                        <div class="text-muted">Mahasiswa</div>
-                    </div>
-                </div>
-                <!-- end col -->
-
-                <div class="col-lg-3 col-6">
-                    <div>
-                        <h2 class="mb-2"><span class="counter-value"
-                                data-target="{{ \Illuminate\Support\Facades\DB::table('program_studis')->count() }}"></span>
-                        </h2>
-                        <div class="text-muted">Program Studi</div>
-                    </div>
-                </div>
-                <!-- end col -->
-                <div class="col-lg-3 col-6">
-                    <div>
-                        <h2 class="mb-2"><span class="counter-value" data-target="300">0</span>+</h2>
-                        <div class="text-muted">Penghargaan</div>
-                    </div>
-                </div>
-                <!-- end col -->
-                <div class="col-lg-3 col-6">
-                    <div>
-                        <h2 class="mb-2"><span class="counter-value" data-target="25">0</span>+</h2>
-                        <div class="text-muted">Organisasi Kemahasiswaaan</div>
-                    </div>
-                </div>
-                <!-- end col -->
-            </div>
-            <!-- end row -->
-        </div>
-        <!-- end container -->
-    </section>
-    <!-- end counter -->
-
-    <!-- Start footer -->
-    <footer class="custom-footer bg-dark py-5 position-relative">
-        <div class="container">
-            <div class="row">
-                <!-- Logo dan Deskripsi -->
-                <div class="col-lg-5 mt-4">
-                    <div>
-                        <img src="assets/images/logo-light.png" alt="logo light" height="50">
-                        <div class="mt-4 fs-13">
-                            <p class="text-white">Politeknik Negeri Poliwangi</p>
-                            <p class="ff-secondary text-white">
-                                Kolaborasi antara pengetahuan dan kemampuan teoritis untuk penerapan kesatuan ilmu dalam
-                                dunia bisnis dan dunia kerja.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lokasi dan Kontak -->
-                <div class="col-lg-7 ms-lg-auto">
-                    <div class="row">
-                        <div class="col-sm-7 mt-4">
-                            <h5 class="text-white mb-0">Lokasi</h5>
-                            <div class="text-white mt-3">
-                                Jalan Raya Jember KM 13<br>
-                                Banyuwangi 68461, Jawa Timur – Indonesia
-                            </div>
-                        </div>
-                        <div class="col-sm-5 mt-4">
-                            <h5 class="text-white mb-0">Kontak</h5>
-                            <div class="text-white mt-3">
-                                <ul class="list-unstyled ff-secondary footer-list">
-                                    <li>Telepon: +62 (0333) 636780</li>
-                                    <li>Email: poliwangi@poliwangi.ac.id<br>humas@poliwangi.ac.id</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Copyright dan Sosial Media -->
-            <div class="row text-center text-sm-start align-items-center mt-5">
-                <div class="col-sm-6">
-                    <div>
-                        <p class="copy-rights mb-0">
-                            <script>
-                            document.write(new Date().getFullYear())
-                            </script> © Politeknik Negeri Banyuwangi
-                        </p>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end mt-3 mt-sm-0">
-                        <ul class="list-inline mb-0 footer-social-link">
-                            <li class="list-inline-item">
-                                <a href="javascript: void(0);" class="avatar-xs d-block">
-                                    <div class="avatar-title rounded-circle">
-                                        <i class="ri-google-fill"></i>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="javascript: void(0);" class="avatar-xs d-block">
-                                    <div class="avatar-title rounded-circle">
-                                        <i class="ri-facebook-fill"></i>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="javascript: void(0);" class="avatar-xs d-block">
-                                    <div class="avatar-title rounded-circle">
-                                        <i class="ri-instagram-fill"></i>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="javascript: void(0);" class="avatar-xs d-block">
-                                    <div class="avatar-title rounded-circle">
-                                        <i class="ri-youtube-fill"></i>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Iframe -->>
-        </div>
-    </footer>
-
-    <!-- end footer -->
+        </footer>
 
     </div>
-    <!-- end layout wrapper -->
-
-    <!-- Modal Lupa Kode Bayar -->
-    <div class="modal fade" id="forgetcode" tabindex="-1" aria-labelledby="forgetcodeLabel">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="forgetcodeLabel">Lupa Kode Virtual Account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row g-3">
-                            <div class="col-xxl-6">
-                                <label for="nik" class="form-label">NIK</label>
-                                <input type="text" class="form-control" id="nik_kode" placeholder="Masukkan NIK">
-                            </div>
-                            <!--end col-->
-                            <label for="gelombang" class="form-label fs-13">Gelombang Pendaftaran</label>
-                            <select class="form-select" aria-label="Default select example" name="gelombang"
-                                id="gelombang_kode">
-                                <option selected>Pilih Gelombang Pendaftaran</option>
-                                @forelse($gelombang as $index => $h)
-                                <option value="{{ $h->id }}">{{ $h->nama_gelombang }}</option>
-                                @empty
-                                @endforelse
-                            </select>
-                            <div class="col-xxl-6">
-                                <label for="kode" class="form-label">Kode Virtual Account</label>
-                                <div class="input-group">
-                                    <!-- Tempat untuk menampilkan alert -->
-                                    <div id="alertBox" class="alert alert-success alert-dismissible fade" role="alert"
-                                        style="display: none;">
-                                        <strong id="alertTitle"></strong> <span id="alertMessage"></span>
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                            aria-label="Close"></button>
-                                    </div>
-
-                                    <input disabled type="text" class="form-control" id="kode"
-                                        placeholder="Kode Virtual Account">
-                                    <button type="button" class="btn btn-outline-secondary" id="copy-button"
-                                        onclick="copyCode()">Salin</button>
-                                </div>
-                            </div>
-
-                            <!--end col-->
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-
-
-                                    <button type="submit"
-                                        class="btn btn-primary px-3 py-1 show-details">Details</button>
-
-                                </div>
-                            </div>
-                            <!--end col-->
-                        </div>
-                        <!--end row-->
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
-
-    <!-- JAVASCRIPT -->
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
-    {{-- <script src="{{ asset('assets/libs/simplebar/simplebar.min.js') }}"></script> --}}
-    <script type="text/javascript">
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $(".show-details").click(function(e) {
-        e.preventDefault();
-        var e = document.getElementById("gelombang_kode");
-        var nik_kode = document.getElementById("nik_kode").value;
-        var gelombang_kode = e.value;
-
-        //  alert(gelombang_kode);
-
-        $.ajax({
-            type: 'post',
-            url: "{{ URL('cekkode') }}",
-            data: {
-                nik: nik_kode,
-                gelombang: gelombang_kode
-            },
-            success: function(data) {
-                $("#kode").val(data);
-                // console.log(data);
-                //  alert(data);
-            }
-        });
-
-    });
-    </script>
     <script>
-    const iframeContainer = document.getElementById('floating-iframe-container');
-    let initialBottom = 20; // Jarak awal dari bawah
-    let lastScrollPosition = window.scrollY;
-
-    // Set posisi awal iframe di bawah
-    iframeContainer.style.bottom = `${initialBottom}px`;
-
-    window.addEventListener('scroll', () => {
-        const currentScrollPosition = window.scrollY;
-        const scrollDifference = currentScrollPosition - lastScrollPosition;
-
-        // Update posisi bottom berdasarkan arah scroll
-        initialBottom -= scrollDifference * 0.5; // Faktor pengurang kecepatan (lebih lambat)
-
-        // Pastikan posisi minimal tetap 20px dari bawah
-        iframeContainer.style.bottom = `${Math.max(20, initialBottom)}px`;
-
-        // Update posisi scroll terakhir
-        lastScrollPosition = currentScrollPosition;
-    });
-    </script>
-
-    <script>
-    function copyCode() {
-        const kodeInput = document.getElementById('kode');
-
-        if (kodeInput.value) {
-            kodeInput.removeAttribute('disabled');
-            kodeInput.select();
-            kodeInput.setSelectionRange(0, 99999); // Untuk mendukung browser lama
-
-            // Menyalin kode ke clipboard
-            navigator.clipboard.writeText(kodeInput.value).then(() => {
-                showAlert('Sukses!', 'Kode Virtual Account berhasil disalin!', 'success');
-            }).catch(err => {
-                showAlert('Gagal!', 'Gagal menyalin kode. Coba lagi.', 'danger');
-            });
-
-            kodeInput.setAttribute('disabled', true);
-        } else {
-            showAlert('Peringatan!', 'Tidak ada kode untuk disalin!', 'warning');
-        }
-    }
-    </script>
-
-    <!--Card Gelombang js-->
-    <script>
-    function show(id) {
-        //shows the #more
-        document.getElementById('more' + id).style.display = "block";
-        document.getElementById('card-text' + id).style.display = "none";
-        document.getElementById('close' + id).style.display = "inline";
-    }
-
-    function hide(id) {
-        //shows the #more
-        document.getElementById('more' + id).style.display = "none";
-        document.getElementById('card-text' + id).style.display = "block";
-        document.getElementById('close' + id).style.display = "none";
-    }
-
-    function daftar(id) {
-        //shows the #more
-        document.getElementById('gelombang').value = id;
-    }
-    </script>
-    <!--Card Gelombang js-->
-
-    <!--Swiper slider js-->
-
-    <!-- landing init -->
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.10/iframeResizer.min.js"></script>
-
-    <style>
-    body {
-        margin: 0;
-        padding: 0;
-    }
-
-    canvas {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        pointer-events: none;
-    }
-    </style>
-
-    <script>
-    function moveImageRandomly() {
-        const img = document.querySelector('.demo-img-patten-top img');
-        const container = document.querySelector('.demo-img-patten-top');
-        if (!img || !container) return;
-
-        // Ukuran container (untuk memastikan gambar tidak keluar area)
-        const containerWidth = container.offsetWidth;
-        const containerHeight = container.offsetHeight;
-
-        // Ukuran gambar
-        const imgWidth = img.offsetWidth;
-        const imgHeight = img.offsetHeight;
-
-        // Tentukan gerakan random dalam batas container
-        const randomX = Math.random() * (containerWidth - imgWidth);
-        const randomY = Math.random() * (containerHeight - imgHeight);
-
-        // Update posisi gambar
-        img.style.transform = `translate(${randomX}px, ${randomY}px)`;
-    }
-
-    // Panggil fungsi setiap 1.5 detik
-    setInterval(moveImageRandomly, 1500);
-    </script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const sections = document.querySelectorAll("section");
-        const navLinks = document.querySelectorAll(".nav-link");
-
-        function changeActiveLink() {
-            let current = "";
-
-            sections.forEach((section) => {
-                const sectionTop = section.offsetTop - 50; // Tambahkan padding jika navbar fixed
-                if (scrollY >= sectionTop) {
-                    current = section.getAttribute("id");
-                }
-            });
-
-            navLinks.forEach((link) => {
-                link.classList.remove("active");
-                if (link.getAttribute("href").includes(current)) {
-                    link.classList.add("active");
-                }
-            });
+        function show(id) {
+            // Logika untuk menampilkan deskripsi penuh (tidak digunakan di layout baru ini)
+            // Namun, jika ingin mempertahankannya:
+            // document.getElementById('card-text' + id).style.display = 'none';
+            // document.getElementById('more' + id).style.display = 'block';
+            // document.getElementById('close' + id).style.display = 'inline-block';
+            // event.target.style.display = 'none'; // Sembunyikan 'Read More'
+            
+            // Karena menggunakan Horizontal Card, fungsi ini mungkin tidak lagi relevan kecuali untuk Read More yang terpisah.
         }
 
-        window.addEventListener("scroll", changeActiveLink);
-    });
+        function hide(id) {
+            // Logika untuk menyembunyikan deskripsi penuh
+            // document.getElementById('card-text' + id).style.display = 'block';
+            // document.getElementById('more' + id).style.display = 'none';
+            // document.getElementById('close' + id).style.display = 'none';
+            // document.querySelector('#layanan .card-footer a[onclick="show(\'' + id + '\')"]').style.display = 'inline-block';
+        }
+        
+        function daftar(id) {
+            // Fungsi untuk mengarahkan pilihan gelombang di form pendaftaran
+            document.getElementById('gelombang').value = id;
+            document.getElementById('gelombang_hero').value = id;
+        }
+
+        // Contoh inisialisasi Swiper/Carousel jika diperlukan
+        // var swiper = new Swiper(".demo-carousel", { 
+        //     loop: true, 
+        //     autoplay: { delay: 2000 },
+        // });
     </script>
-
-    <script>
-    document.getElementById('gelombang').addEventListener('change', function() {
-        const gelombangId = this.value;
-
-        fetch(`/get-prodi?gelombang_id=${gelombangId}`)
-            .then(response => response.json())
-            .then(data => {
-                const prodiDropdown = document.getElementById('prodi');
-                prodiDropdown.innerHTML = '<option value="">Pilih Program Studi</option>';
-
-                const prodiLainDropdown = document.getElementById('prodiLain');
-                prodiLainDropdown.innerHTML = '<option value="">Pilih Program Studi Lain</option>';
-
-                if (data.error) {
-                    // alert(data.error);
-                    return;
-                }
-                console.log('test')
-                console.log(data.prodi_lain);
-
-                data.prodi_lain.forEach(prodiLain => {
-                    prodiLainDropdown.innerHTML +=
-                        `<option value="${prodiLain.id}">${prodiLain.name} - ${prodiLain.kampus}</option>`;
-                });
-
-                console.log(prodiLainDropdown);
-                data.prodi.forEach(prodi => {
-                    prodiDropdown.innerHTML +=
-                        `<option value="${prodi.id}">${prodi.nama_program_studi}</option>`;
-                });
-            })
-            .catch(error => console.error('Error:', error));
-    });
-    </script>
-    <script>
-    
-    document.getElementById('gelombang').addEventListener('change', function() {
-        const gelombangId = this.value;
-
-        fetch(`/get-program-studi-2?gelombang_id=${gelombangId}`)
-            .then(response => response.json())
-            .then(data => {
-                const programStudi2Dropdown = document.getElementById('programStudi2');
-                const prodiLainDropdown = document.getElementById('prodiLain');
-
-                // Reset dropdown options
-                programStudi2Dropdown.innerHTML = '<option value="">Pilih Program Studi</option>';
-                prodiLainDropdown.innerHTML = '<option value="">Pilih Program Studi Lain</option>';
-
-                if (data.error) {
-                    // alert(data.error);
-                    return;
-                }
-
-                // Populate Program Studi 2
-                data.program_studi_2.forEach(programStudi2 => {
-                    programStudi2Dropdown.innerHTML +=
-                        `<option value="${programStudi2.id}">${programStudi2.nama_program_studi}</option>`;
-                });
-
-                // Populate Prodi Lain
-                data.prodi_lain.forEach(prodiLain => {
-                    prodiLainDropdown.innerHTML +=
-                        `<option value="${prodiLain.id}">${prodiLain.name} - ${prodiLain.kampus}</option>`;
-                });
-            })
-            .catch(error => console.error('Error:', error));
-    });
-    </script>
-<script>
-    document.addEventListener("scroll", function () {
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll("#navbar-example .nav-link");
-
-  let current = "";
-
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop - 160; // offset tinggi navbar
-    if (pageYOffset >= sectionTop) {
-      current = section.getAttribute("id");
-    }
-  });
-
-  navLinks.forEach((link) => {
-    link.classList.remove("active");
-    if (link.getAttribute("href") === "#" + current) {
-      link.classList.add("active");
-    }
-  });
-});
-
-</script>
-
 
 </body>
-
 
 </html>
