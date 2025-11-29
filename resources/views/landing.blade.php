@@ -153,7 +153,10 @@
                         <div class="mt-lg-5 pt-5 text-center text-lg-start">
                             <h1 class="display-5 fw-bold mb-3 lh-base text-primary">
                                 Pendaftaran Mahasiswa Baru 
-                                <span class="d-block text-danger">POLITEKNIK NEGERI BANYUWANGI</span>
+                               <span class="d-block text-danger" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+  POLITEKNIK NEGERI BANYUWANGI
+</span>
+
                             </h1>
                             <p class="lead text-muted mb-4">
                                 Wujudkan karir cemerlang di industri. Kuliah Vokasi: Lulus Cepat, Siap Kerja!
